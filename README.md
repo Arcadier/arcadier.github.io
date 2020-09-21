@@ -1,89 +1,3 @@
-# Arcadier PHP SDK
-
-[![GitHub release](https://img.shields.io/github/v/release/arcadier/arcadier-php)](https://img.shields.io/github/v/release/arcadier/arcadier-php)
-
-* [Introduction]()
-* [Requirements](https://github.com/Arcadier/arcadier-php#requirements)
-* [How to Install](https://github.com/Arcadier/arcadier-php#installation-via-composer)
-* [Getting Started](https://github.com/Arcadier/arcadier-php#-getting-started)
-  * [Authentication](https://github.com/Arcadier/arcadier-php#authentication)
-  * [Trying it](https://github.com/Arcadier/arcadier-php#trying-it)
-* [API Documentation](https://github.com/Arcadier/arcadier-php#-api-documentation)
-* [Example Project]()
-* [Changelog](https://github.com/Arcadier/arcadier-php#-api-documentation)
-* [License](https://github.com/Arcadier/arcadier-php#license)
-* [Documentation]()
-
-## Introduction
-
-This PHP SDK is an API wrapper that allows developers to integrate their PHP applications easily with Arcadier's APIs. It does the heavily lifting of building the requests and authentication for every API call
-
-This lets you focus on **building your front-end** instead of having to worry about if you setup the backend properly with our APIs.
-
-All you need to know is how to which parameters in each function. This is documenteted [here]().
-
-## Requirements
-* PHP 7.0.0+
-* An Arcadier marketplace of [package Scale](https://www.arcadier.com/packages.html) or above (including [Enterprise](https://www.arcadier.com/enterprise/))
-
-## Installation via Composer
-You can install SDK via composer using the following command line:
-```php
-composer require arcadier/test-packagist-sdk
-```
-
-## 💡 Getting Started
-### Authentication
-Once the SDK is installed in your directory, go to `/vendor/arcadier/test-packagist-sdk/sdk/admin_token.php` and `/vendor/arcadier/test-packagist-sdk/sdk/ApiSdk.php` and change the following variables to your marketplace's:
-
-* `$client_id`
-* `$client_secret`
-* `$marketplace`
-* `$protocol` is either https or http depending on your server
-* `$marketplace` is your marketplace domain.
-
-`$client_id` and `$client_secret` are found in the Account Settings of you Administrator portal.
-
-### Trying it
-In every PHP script you intend to call Arcadier's API, make sure to include the following snippet:
-```php
-include '../vendor/arcadier/test-packagist-sdk/sdk/ApiSdk.php';
-$sdk = new ApiSdk();
-```
-
-Get your marketplace's information
-
-**GET** **```/api/v2/marketplaces```** is mapped to `$sdk->getMarketplaceInfo();`
-```php
-$marketplace_info = $sdk->getMarketplaceInfo();
-echo $marketplace_info;
-```
-
-Listing all items:
-
-**GET** **```/api/v2/items```** is mapped to `$sdk->getAllItems();`
-```php
-$item_list = $sdk->getAllItems();
-echo $item_list['Records']; //The actual array of items is in the "Records" field of the JSON response
-```
-
-Searching for an item
-
-**POST** **```/api/v2/items```** is mapped to `$sdk->getAllItemsJsonFiltering();`
-```php
-$data = [
-    'keywords' => 'string',
-    'pagesize' => 'string',
-    'Categories' =>[
-        'string'
-    ],
-    'sellerID' => 'string'
-];
-
-$response = $sdk->getAllItemsJsonFiltering($data);
-$results = $response['Records']; //The actual array of matching items is in the "Records" field of the JSON response
-```
-
 Documentation
 ===
 
@@ -91,8 +5,6 @@ Documentation
 * [User Accounts & Passwords]()
 * [Addresses]()
 * [Items]()
-
-
 
 ## User Accounts
 ### Get A User's details
@@ -103,7 +15,33 @@ Arguments:
 * `$id` - *(Required)* User GUID (string) 
 * `$includes` - *(Optional)* Takes the following values (string):
   * `"addresses"` 
+---
+### Get All Buyers
 
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```** is mapped to `getAllBuyers($keywordsParam = null,, $pageSize = null, $pageNumber = null)`
+
+Arguments:
+* `$keywords` - *(Optional)* Search all buyers having a certain keyword in their details (name/e-mail). (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+---
+### Get All Merchants
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=merchant```** is mapped to `getAllMerchants($keywordsParam = null, $pageSize = null, $pageNumber = null)`
+
+Arguments:
+* `$keywords` - *(Optional)* Search all merchants having a certain keyword in their details (name/e-mail). (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+---
+### Get All Users
+
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```** is mapped to `getAllUsers($keywordsParam = null, $pageSize = null, $pageNumber = null)`
+
+Arguments:
+* `$keywords` - *(Optional)* Search all users having a certain keyword in their details (name/e-mail). (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+---
 ### Create Buyer Account
 
 **POST** **```api/v2/accounts/register```** is mapped to `registerUser($data)`
@@ -115,7 +53,7 @@ $data = [
 ];
 $newUser = $sdk->registerUser($data);
 ``` 
-
+---
 ### Update User information
 **PUT** **`/api/v2/users/{{userID}}`** is mapped to `updateUserInfo($id, $data)`
 
@@ -151,6 +89,7 @@ $data = [
     'Visible' => true       
 ];
 ```
+---
 
 ### Upgrade User Role
 **PUT `/api/v2/admins/{{adminID}}/users/{{userID}}/roles/{{role}}`** is mapped to `upgradeUserRole($id, $role)`
@@ -161,11 +100,15 @@ Arguments:
   * "merchant"
   * "Admin"
 
+---
+
 ### Delete User
 **DELETE `/api/v2/admins/{{adminID}}/users/{{userID}}`** is mapped to `deleteUser($id)`
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
+
+---
 
 ### Get Password Reset Token
 **POST `/api/v2/admins/{{adminID}}/password`** is mapped to `resetPassword($data)`
@@ -176,6 +119,8 @@ $data = [
 ];
 $result = $sdk->$resetPassword($data);
 ```
+
+---
 
 ### Update Password
 **PUT `/api/v2/users/{{userID}}/password`** is mapped to `updatePassword($data, $userId)`
@@ -192,6 +137,8 @@ $data = [
 ];
 ```
 
+---
+
 ## Addresses
 ### Get User Address
 **GET ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `getUserAddress($id,  $addressID)`
@@ -199,6 +146,8 @@ $data = [
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$addressID` - *(Optional)* Address GUID (string). Ommitting it will return all addresses of that user.
+
+---
 
 ### Create User Address
 **POST ``/api/v2/users/{{userID}}/addresses``** is mapped to `createUserAddress($id, $data)`
@@ -223,6 +172,7 @@ $data = [
     'CountryCode' => 'string' //required
 ];
 ```
+---
 
 ### Update User Address
 **PUT ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `updateUserAddress($id, $addressID, $data)`
@@ -249,6 +199,7 @@ $data = [
     'CountryCode' => 'string' //required
 ];
 ```
+---
 
 ### Delete User Address
 **DELETE ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `deleteUserAddress($id, $addressID)`
@@ -256,16 +207,23 @@ $data = [
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$addressID` - *(Optional)* Address GUID (string). Ommitting it will return all addresses of that user.
+---
 
 ## Items
 ### Get Item Information
-**GET `` ``** is mapped to `getItemInfo($id)`
+**GET ``/api/v2/items/{{itemID}}``** is mapped to `getItemInfo($id)`
 
 Arguments:
 * * `$id` - *(Required)* Item GUID (string)
+---
 
 ### Get All Items
-**GET** **```/api/v2/items```** is mapped to `getAllItems();`
+**GET** **```/api/v2/items```** is mapped to `getAllItems($pageSize = null, $pageNumber = null);`
+
+Arguments:
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+
 ```php
 $item_list = $sdk->getAllItems();
 echo $item_list['Records']; //The actual array of items is in the "Records" field of the JSON response
@@ -404,7 +362,7 @@ $data = [
     ]
 ]
 ```
-
+---
 ### Create Listing/Booking
 **POST ``/api/v2/merchants/{{merchantID}}/items``** is mapped to `createItem($data, $merchantId)`
 
@@ -576,6 +534,7 @@ $data = [
     ]
 ]
 ```
+---
 ### Edit Item/Listing/Booking
 **PUT ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}``** is mapped to `editItem($data, $merchantId, $itemId)`
 
@@ -586,14 +545,14 @@ Arguments:
 
 Documentation and `$data` details can be found [here](https://apiv2.arcadier.com/#8af9bf27-a3fb-4623-b8d0-f53a67697c47).
 
-
+---
 ### Delete Item/Listing/Booking
 **DELETE ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}``** is mapped to `deleteItem($merchantId, $itemId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
 * `$itemId` - *(Required)* Item GUID (string)
-
+---
 ### Tag Item/Listing/Booking
 **POST ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
 
@@ -608,27 +567,48 @@ $data = [
     'string'
 ];
 ```
-
+---
 ### Get Item Tags
 **GET ``/api/v2/tags``** is mapped to `getItemTags($pageSize = null, $pageNumber = null)`
 
 Arguments:
-* `$pageSize` - *(Optional)* Number of results per page (integer)
-* `$pageNumber` - *(Optional)* Page number (integer)
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
 
 More about pagination [here](https://apiv2.arcadier.com/#pagination)
 
+---
+### Tag an Item
+**POST ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
+
+Arguments:
+* `$merchantId` - *(Required)* The merchant's GUID (string)
+* `$itemId` - *(Required)* The item GUID of the item to tag (string)
+* `$data` - An array of strings:
+
+```php
+$data = [
+	"string_1",
+	"string_2"
+];
+```
+
+---
 ### Delete Tags
 **DELETE ``/api/v2/tags``** is mapped to `deleteTags($data)`
 
 ```php
 $data = [
-    'string',
-    'string'
+    'string_1',
+    'string_2'
 ];
 ```
+---
+
+## Cart
 
 
-## Changelog
 
-## License
+
+
+
