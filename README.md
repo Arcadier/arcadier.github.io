@@ -15,6 +15,7 @@ Arguments:
 * `$id` - *(Required)* User GUID (string) 
 * `$includes` - *(Optional)* Takes the following values (string):
   * `"addresses"` 
+
 ---
 ### Get All Buyers
 
@@ -24,6 +25,7 @@ Arguments:
 * `$keywords` - *(Optional)* Search all buyers having a certain keyword in their details (name/e-mail). (string)
 * `$pageSize` - *(Optional)* The number of results in one response. (string)
 * `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+
 ---
 ### Get All Merchants
 **GET** **```/api/v2/admins/{{adminID}}/users/?role=merchant```** is mapped to `getAllMerchants($keywordsParam = null, $pageSize = null, $pageNumber = null)`
@@ -32,6 +34,7 @@ Arguments:
 * `$keywords` - *(Optional)* Search all merchants having a certain keyword in their details (name/e-mail). (string)
 * `$pageSize` - *(Optional)* The number of results in one response. (string)
 * `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+
 ---
 ### Get All Users
 
@@ -41,6 +44,7 @@ Arguments:
 * `$keywords` - *(Optional)* Search all users having a certain keyword in their details (name/e-mail). (string)
 * `$pageSize` - *(Optional)* The number of results in one response. (string)
 * `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+
 ---
 ### Create Buyer Account
 
@@ -53,6 +57,7 @@ $data = [
 ];
 $newUser = $sdk->registerUser($data);
 ``` 
+
 ---
 ### Update User information
 **PUT** **`/api/v2/users/{{userID}}`** is mapped to `updateUserInfo($id, $data)`
@@ -89,6 +94,7 @@ $data = [
     'Visible' => true       
 ];
 ```
+
 ---
 
 ### Upgrade User Role
@@ -172,6 +178,7 @@ $data = [
     'CountryCode' => 'string' //required
 ];
 ```
+
 ---
 
 ### Update User Address
@@ -199,6 +206,7 @@ $data = [
     'CountryCode' => 'string' //required
 ];
 ```
+
 ---
 
 ### Delete User Address
@@ -207,6 +215,7 @@ $data = [
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$addressID` - *(Optional)* Address GUID (string). Ommitting it will return all addresses of that user.
+
 ---
 
 ## Items
@@ -215,6 +224,7 @@ Arguments:
 
 Arguments:
 * * `$id` - *(Required)* Item GUID (string)
+
 ---
 
 ### Get All Items
@@ -228,6 +238,7 @@ Arguments:
 $item_list = $sdk->getAllItems();
 echo $item_list['Records']; //The actual array of items is in the "Records" field of the JSON response
 ```
+
 ---
 
 ### Searching for an item
@@ -260,6 +271,7 @@ $data = [
 $response = $sdk->getAllItemsJsonFiltering($data);
 $results = $response['Records']; //The actual array of matching items is in the "Records" field of the JSON response
 ```
+
 ---
 
 ### Create Item
@@ -362,6 +374,7 @@ $data = [
     ]
 ]
 ```
+
 ---
 ### Create Listing/Booking
 **POST ``/api/v2/merchants/{{merchantID}}/items``** is mapped to `createItem($data, $merchantId)`
@@ -534,6 +547,7 @@ $data = [
     ]
 ]
 ```
+
 ---
 ### Edit Item/Listing/Booking
 **PUT ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}``** is mapped to `editItem($data, $merchantId, $itemId)`
@@ -567,6 +581,7 @@ $data = [
     'string'
 ];
 ```
+
 ---
 ### Get Item Tags
 **GET ``/api/v2/tags``** is mapped to `getItemTags($pageSize = null, $pageNumber = null)`
@@ -603,6 +618,7 @@ $data = [
     'string_2'
 ];
 ```
+
 ---
 
 ## Cart
