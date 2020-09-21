@@ -6,7 +6,10 @@
 ## User Accounts
 ### Get A User's details
 
-**GET** **```/api/v2/users/{{userID}}```** is mapped to `getUserInfo($id, $include)`
+**GET** **```/api/v2/users/{{userID}}```** is mapped to:
+```php 
+getUserInfo($id, $include)
+```
 
 Arguments:
 * `$id` - *(Required)* User GUID (string) 

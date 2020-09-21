@@ -1781,7 +1781,7 @@ ol li b {
 
 code {
     background: none;
-    font-family: "Courier";
+    font-family: unset;
 }
 
 code .b {
