@@ -280,7 +280,7 @@ Arguments:
 **GET ``/api/v2/items/{itemID}``** is mapped to `getItemInfo($id)`
 
 Arguments:
-* * `$id` - *(Required)* Item GUID (string)
+* `$id` - *(Required)* Item GUID (string)
 
 ---
 
