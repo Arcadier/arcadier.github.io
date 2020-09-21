@@ -8,7 +8,7 @@
 
 **GET** **```/api/v2/users/{{userID}}```** is mapped to:
 ```php 
-$userInfo = getUserInfo($id, $include);
+$userInfo = $sdk->getUserInfo($id, $include);
 echo $userInfo;
 ```
 
