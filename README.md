@@ -2,7 +2,28 @@
 * [User Accounts & Passwords]()
 * [Addresses]()
 * [Items]()
+* [Cart]()
 
+# Initialising
+Download the required libraries to your directory using the following Composer command line:
+```bash
+composer require arcadier/arcadier-php
+```
+
+Find the `.env` file in the following directory created: "vendor\arcadier\arcadier-php\src" and replace the variables with the relevant values:
+```
+CLIENT_ID = ""
+CLIENT_SECRET = ""
+DOMAIN = ""
+PROTOCOL = ""
+```
+
+Remember to load the SDK by including the following line in you PHP script:
+```php
+require "vendor\arcadier\arcadier-php\src\api.php"; #
+$sdk = new ApiSdk(); #this variable does not have to be $sdk, but in this documentation, it will be used throughout
+```
+---
 ## User Accounts
 ### Get A User's details
 
@@ -83,6 +104,7 @@ echo $updatedUser;
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$data` -  *(Optional)* If omitted, user will be unaffected.
+
 
 ```php
 $data = [
