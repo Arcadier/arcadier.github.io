@@ -18,7 +18,7 @@ DOMAIN = ""
 PROTOCOL = ""
 ```
 
-Remember to load the SDK by including the following line in you PHP script:
+Remember to load the SDK by including the following line in your PHP script:
 ```php
 require "vendor\arcadier\arcadier-php\src\api.php"; #
 $sdk = new ApiSdk(); #this variable does not have to be $sdk, but in this documentation, it will be used throughout
