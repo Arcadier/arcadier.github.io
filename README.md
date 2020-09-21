@@ -8,7 +8,8 @@
 
 **GET** **```/api/v2/users/{{userID}}```** is mapped to:
 ```php 
-getUserInfo($id, $include)
+$userInfo = getUserInfo($id, $include);
+echo $userInfo;
 ```
 
 Arguments:
