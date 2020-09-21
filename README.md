@@ -6,7 +6,7 @@
 ## User Accounts
 ### Get A User's details
 
-**GET** **```/api/v2/users/{{userID}}```**
+**GET** **```/api/v2/users/{userID}```**
 ```php 
 $userInfo = $sdk->getUserInfo($id, $include);
 echo $userInfo;
@@ -20,7 +20,7 @@ Arguments:
 ---
 ### Get All Buyers
 
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```**
+**GET** **```/api/v2/admins/{adminID}/users/?role=buyer```**
 ```php 
 $buyerList = $sdk->getAllBuyers($keywordsParam = null, $pageSize = null, $pageNumber = null);
 echo $buyerList['Records'];
@@ -33,7 +33,7 @@ Arguments:
 
 ---
 ### Get All Merchants
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=merchant```**
+**GET** **```/api/v2/admins/{adminID}/users/?role=merchant```**
 ```php
 $merchantList = $sdk->getAllMerchants($keywordsParam = null, $pageSize = null, $pageNumber = null)
 echo $merchantList['Records'];
@@ -47,7 +47,7 @@ Arguments:
 ---
 ### Get All Users
 
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```**
+**GET** **```/api/v2/admins/{adminID}/users/?role=buyer```**
 ```php
 $userList = $sdk->getAllUsers($keywordsParam = null, $pageSize = null, $pageNumber = null);
 echo $userList['Records'];
@@ -74,7 +74,7 @@ echo $newUser;
 
 ---
 ### Update User information
-**PUT** **`/api/v2/users/{{userID}}`**
+**PUT** **`/api/v2/users/{userID}`**
 ```php 
 $updatedUser = $sdk->updateUserInfo($id, $data);
 echo $updatedUser;
@@ -117,7 +117,7 @@ $data = [
 ---
 
 ### Upgrade User Role
-**PUT `/api/v2/admins/{{adminID}}/users/{{userID}}/roles/{{role}}`**
+**PUT `/api/v2/admins/{adminID}/users/{userID}/roles/{role}`**
 ```php 
 $newRole = $sdk->upgradeUserRole($id, $role);
 echo $newRole;
@@ -132,7 +132,7 @@ Arguments:
 ---
 
 ### Delete User
-**DELETE `/api/v2/admins/{{adminID}}/users/{{userID}}`**
+**DELETE `/api/v2/admins/{adminID}/users/{userID}`**
 ```php 
 $deletedUser = $sdk->deleteUser($id);
 echo $deletedUser;
@@ -144,7 +144,7 @@ Arguments:
 ---
 
 ### Get Password Reset Token
-**POST `/api/v2/admins/{{adminID}}/password`**
+**POST `/api/v2/admins/{adminID}/password`**
 ```php
 $data = [
     'UserID': 'string', //User GUID of user to reset password for
@@ -157,7 +157,7 @@ echo $result['Token'];
 ---
 
 ### Update Password
-**PUT `/api/v2/users/{{userID}}/password`** 
+**PUT `/api/v2/users/{userID}/password`** 
 
 Arguments:
 * `$userId` - *(Required)* User GUID (string)
@@ -181,7 +181,7 @@ echo $updatePassword['Result'];
 
 ## Addresses
 ### Get User Address
-**GET ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `getUserAddress($id,  $addressID)`
+**GET ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `getUserAddress($id,  $addressID)`
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -190,7 +190,7 @@ Arguments:
 ---
 
 ### Create User Address
-**POST ``/api/v2/users/{{userID}}/addresses``** is mapped to `createUserAddress($id, $data)`
+**POST ``/api/v2/users/{userID}/addresses``** is mapped to `createUserAddress($id, $data)`
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -217,7 +217,7 @@ $data = [
 ---
 
 ### Update User Address
-**PUT ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `updateUserAddress($id, $addressID, $data)`
+**PUT ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `updateUserAddress($id, $addressID, $data)`
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -245,7 +245,7 @@ $data = [
 ---
 
 ### Delete User Address
-**DELETE ``/api/v2/users/{{userID}}/addresses/{{addressID}}``** is mapped to `deleteUserAddress($id, $addressID)`
+**DELETE ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `deleteUserAddress($id, $addressID)`
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -255,7 +255,7 @@ Arguments:
 
 ## Items
 ### Get Item Information
-**GET ``/api/v2/items/{{itemID}}``** is mapped to `getItemInfo($id)`
+**GET ``/api/v2/items/{itemID}``** is mapped to `getItemInfo($id)`
 
 Arguments:
 * * `$id` - *(Required)* Item GUID (string)
@@ -310,7 +310,7 @@ $results = $response['Records']; //The actual array of matching items is in the 
 ---
 
 ### Create Item
-**POST ``/api/v2/merchants/{{merchantID}}/items``** is mapped to `createItem($data, $merchantId)`
+**POST ``/api/v2/merchants/{merchantID}/items``** is mapped to `createItem($data, $merchantId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
@@ -412,7 +412,7 @@ $data = [
 
 ---
 ### Create Listing/Booking
-**POST ``/api/v2/merchants/{{merchantID}}/items``** is mapped to `createItem($data, $merchantId)`
+**POST ``/api/v2/merchants/{merchantID}/items``** is mapped to `createItem($data, $merchantId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
@@ -585,7 +585,7 @@ $data = [
 
 ---
 ### Edit Item/Listing/Booking
-**PUT ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}``** is mapped to `editItem($data, $merchantId, $itemId)`
+**PUT ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `editItem($data, $merchantId, $itemId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
@@ -596,7 +596,7 @@ Documentation and `$data` details can be found [here](https://apiv2.arcadier.com
 
 ---
 ### Delete Item/Listing/Booking
-**DELETE ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}``** is mapped to `deleteItem($merchantId, $itemId)`
+**DELETE ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `deleteItem($merchantId, $itemId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
@@ -604,7 +604,7 @@ Arguments:
 
 ---
 ### Tag Item/Listing/Booking
-**POST ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
+**POST ``/api/v2/merchants/{merchantID}/items/{itemID}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
 
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
@@ -630,7 +630,7 @@ More about pagination [here](https://apiv2.arcadier.com/#pagination)
 
 ---
 ### Tag an Item
-**POST ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
+**POST ``/api/v2/merchants/{merchantID}/items/{itemID}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
 
 Arguments:
 * `$merchantId` - *(Required)* The merchant's GUID (string)
