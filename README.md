@@ -1,6 +1,3 @@
-Documentation
-===
-
 ## Table of contents
 * [User Accounts & Passwords]()
 * [Addresses]()
