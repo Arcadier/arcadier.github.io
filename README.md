@@ -83,6 +83,7 @@ echo $updatedUser;
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$data` -  *(Optional)* If omitted, user will be unaffected.
+
 ```php
 $data = [
     'Email' => 'string', 
@@ -161,6 +162,7 @@ echo $result['Token'];
 Arguments:
 * `$userId` - *(Required)* User GUID (string)
 * `$data` - *(Required)*
+
 ```php
 $data = [
   'OldPassword' => 'string', //not required if resetting password
@@ -193,6 +195,7 @@ Arguments:
 Arguments:
 * `$id` - *(Required)* User GUID (string)
 * `$data` - *(Required)*
+
 ```php
 $data = [
     'Name' => 'string',
