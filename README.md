@@ -563,6 +563,7 @@ Documentation and `$data` details can be found [here](https://apiv2.arcadier.com
 Arguments:
 * `$merchantId` - *(Required)* Merchant GUID (string)
 * `$itemId` - *(Required)* Item GUID (string)
+
 ---
 ### Tag Item/Listing/Booking
 **POST ``/api/v2/merchants/{{merchantID}}/items/{{itemID}}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
