@@ -20,7 +20,7 @@ PROTOCOL = ""
 
 Remember to load the SDK by including the following line in all your PHP scripts:
 ```php
-require "vendor\arcadier\arcadier-php\src\api.php"; #
+require "vendor\arcadier\arcadier-php\src\api.php";
 $sdk = new ApiSdk(); #this variable does not have to be $sdk, but in this documentation, it will be used throughout
 ```
 ---
