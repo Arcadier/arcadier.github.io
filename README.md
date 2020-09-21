@@ -6,7 +6,7 @@
 ## User Accounts
 ### Get A User's details
 
-**GET** **```/api/v2/users/{{userID}}```** is mapped to:
+**GET** **```/api/v2/users/{{userID}}```**
 ```php 
 $userInfo = $sdk->getUserInfo($id, $include);
 echo $userInfo;
@@ -20,7 +20,11 @@ Arguments:
 ---
 ### Get All Buyers
 
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```** is mapped to `getAllBuyers($keywordsParam = null,, $pageSize = null, $pageNumber = null)`
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```**
+```php 
+$buyerList = $sdk->getAllBuyers($keywordsParam = null, $pageSize = null, $pageNumber = null);
+echo $buyerList['Records'];
+```
 
 Arguments:
 * `$keywords` - *(Optional)* Search all buyers having a certain keyword in their details (name/e-mail). (string)
@@ -29,7 +33,11 @@ Arguments:
 
 ---
 ### Get All Merchants
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=merchant```** is mapped to `getAllMerchants($keywordsParam = null, $pageSize = null, $pageNumber = null)`
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=merchant```**
+```php
+$merchantList = $sdk->getAllMerchants($keywordsParam = null, $pageSize = null, $pageNumber = null)
+echo $merchantList['Records'];
+```
 
 Arguments:
 * `$keywords` - *(Optional)* Search all merchants having a certain keyword in their details (name/e-mail). (string)
@@ -39,7 +47,11 @@ Arguments:
 ---
 ### Get All Users
 
-**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```** is mapped to `getAllUsers($keywordsParam = null, $pageSize = null, $pageNumber = null)`
+**GET** **```/api/v2/admins/{{adminID}}/users/?role=buyer```**
+```php
+$userList = $sdk->getAllUsers($keywordsParam = null, $pageSize = null, $pageNumber = null);
+echo $userList['Records'];
+```
 
 Arguments:
 * `$keywords` - *(Optional)* Search all users having a certain keyword in their details (name/e-mail). (string)
@@ -49,19 +61,24 @@ Arguments:
 ---
 ### Create Buyer Account
 
-**POST** **```api/v2/accounts/register```** is mapped to `registerUser($data)`
+**POST** **```api/v2/accounts/register```**
 ```php
 $data = [
   'Email' => 'string', //email format
   'Password' => 'string', //at least 6 characters long
-  'ConfirmPassword' => 'string'
+  'ConfirmPassword' => 'string' //repeat 'Password' field
 ];
 $newUser = $sdk->registerUser($data);
+echo $newUser;
 ``` 
 
 ---
 ### Update User information
-**PUT** **`/api/v2/users/{{userID}}`** is mapped to `updateUserInfo($id, $data)`
+**PUT** **`/api/v2/users/{{userID}}`**
+```php 
+$updatedUser = $sdk->updateUserInfo($id, $data);
+echo $updatedUser;
+```
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -99,7 +116,11 @@ $data = [
 ---
 
 ### Upgrade User Role
-**PUT `/api/v2/admins/{{adminID}}/users/{{userID}}/roles/{{role}}`** is mapped to `upgradeUserRole($id, $role)`
+**PUT `/api/v2/admins/{{adminID}}/users/{{userID}}/roles/{{role}}`**
+```php 
+$newRole = $sdk->upgradeUserRole($id, $role);
+echo $newRole;
+```
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -110,7 +131,11 @@ Arguments:
 ---
 
 ### Delete User
-**DELETE `/api/v2/admins/{{adminID}}/users/{{userID}}`** is mapped to `deleteUser($id)`
+**DELETE `/api/v2/admins/{{adminID}}/users/{{userID}}`**
+```php 
+$deletedUser = $sdk->deleteUser($id);
+echo $deletedUser;
+```
 
 Arguments:
 * `$id` - *(Required)* User GUID (string)
@@ -118,19 +143,20 @@ Arguments:
 ---
 
 ### Get Password Reset Token
-**POST `/api/v2/admins/{{adminID}}/password`** is mapped to `resetPassword($data)`
+**POST `/api/v2/admins/{{adminID}}/password`**
 ```php
 $data = [
     'UserID': 'string', //User GUID of user to reset password for
     'Action': 'token'
 ];
 $result = $sdk->$resetPassword($data);
+echo $result['Token'];
 ```
 
 ---
 
 ### Update Password
-**PUT `/api/v2/users/{{userID}}/password`** is mapped to `updatePassword($data, $userId)`
+**PUT `/api/v2/users/{{userID}}/password`** 
 
 Arguments:
 * `$userId` - *(Required)* User GUID (string)
@@ -142,6 +168,11 @@ $data = [
   'ConfirmPassword' => 'string',
   'ResetPasswordToken' => 'string' //Obtained from Password reset API. Required if resetting password
 ];
+
+$userId = "d78635hd-h7s5-k987-u4fd-333f-hd52kf6shn76";
+
+$updatePassword = $sdk->updatePassword($data, $userId);
+echo $updatePassword['Result']; 
 ```
 
 ---
