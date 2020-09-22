@@ -1,3 +1,8 @@
+---
+layout: page
+title: "PHP SDK"
+permalink: /php-sdk/
+---
 # Table of contents
 * [User Accounts & Passwords]()
 * [Addresses]()
