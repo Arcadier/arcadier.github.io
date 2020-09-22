@@ -1,5 +1,5 @@
 ---
 layout: page
-title: "PHP-SDK"
+title: "Node-SDK"
 permalink: /node-sdk/
 ---
