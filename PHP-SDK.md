@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "PHP SDK"
+title: "PHP-SDK"
 permalink: /php-sdk/
 ---
 # Table of contents
