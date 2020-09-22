@@ -15,19 +15,6 @@
     <script>hljs.initHighlightingOnLoad();</script>
     
     <link rel="shortcut icon" type="image/x-icon" href="https://api.arcadier.com/assets/images/favicon/favicon-16x16.png">
-    <script>
-    (function(){
-      var body = document.body;
-      var menu_trigger = document.getElementsByClassName('menu-trigger')[0];
-    
-      if ( typeof $menu_trigger !== 'undefined' ) {
-        menu_trigger.addEventListener('click', function() {
-          body.className = ( body.className == 'menu-active' )? '' : 'menu-active';
-        });
-      }
-    
-    })();
-    </script>
 
   </head>
   <body class="page-welcome  welcome-body">
@@ -76,21 +63,7 @@
       </div>
     </header>
 	  <div class="wrapper grab_wrapper">
-      <!-- Navigation -->
-      <nav id="slide-menu">
-        <ul>
-          <li class="timeline">Timeline</li>
-          <li class="events">Events</li>
-          <li class="calendar">Calendar</li>
-          <li class="sep settings">Settings</li>
-          <li class="logout">Logout</li>
-        </ul>
-      </nav>
-      <!-- Content panel -->
-      <div id="content">
-        <div class="menu-trigger"></div>
-        <section>{{ content }}</section>
-      </div>
+      <section>{{ content }}</section>
     </div>   
       
   </div>
