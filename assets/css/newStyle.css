@@ -4512,3 +4512,80 @@ hr {
     background: white;
   }
 
+  nav#slide-menu {
+    position: fixed;
+    top: 0;
+    left: -100px;
+    bottom: 0;
+    display: block;
+    float: left;
+    width: 100%;
+    max-width: 284px;
+    height: 100%;
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+nav#slide-menu > ul {
+    display: block;
+    margin: 40px;
+    padding: 0;
+    list-style: none;
+    opacity: 0.5;
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+nav#slide-menu > ul li {
+    color: #dfe5eb;
+    padding: 6px 0;
+    cursor: pointer;
+}
+nav#slide-menu > ul li:hover {
+    color: #59e9df;
+}
+nav#slide-menu > ul li:before {
+    font-family: "ico";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    color: #59e9df;
+    margin-right: 12px;
+    text-align: center;
+    font-variant: normal;
+    font-size: 0.75em;
+    text-transform: none;
+    line-height: 1em;
+}
+nav#slide-menu > ul li.sep {
+    margin-top: 7px;
+    padding-top: 14px;
+    border-top: 1px solid #6b7b8d;
+}
+nav#slide-menu > ul li.timeline:before {
+    content: '\e805';
+}
+nav#slide-menu > ul li.events:before {
+    content: '\e802';
+}
+nav#slide-menu > ul li.calendar:before {
+    content: '\e800';
+}
+nav#slide-menu > ul li.settings:before {
+    content: '\e803';
+}
+nav#slide-menu > ul li.logout:before {
+    content: '\e804';
+}
+body.menu-active nav#slide-menu {
+    left: 0px;
+}
+body.menu-active nav#slide-menu ul {
+    left: 0px;
+    opacity: 1;
+}
+
+

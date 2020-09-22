@@ -13,6 +13,19 @@
     <link rel="stylesheet" href="{{ "/assets/css/styles/vs2015.css" }}">
     <script src="{{ "/assets/js/highlight.pack.js" }}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      (function() {
+    var $body = document.body
+    , $menu_trigger = $body.getElementsByClassName('menu-trigger')[0];
+
+    if ( typeof $menu_trigger !== 'undefined' ) {
+        $menu_trigger.addEventListener('click', function() {
+            $body.className = ( $body.className == 'menu-active' )? '' : 'menu-active';
+        });
+    }
+
+}).call(this);
+    </script>
     <link rel="shortcut icon" type="image/x-icon" href="https://api.arcadier.com/assets/images/favicon/favicon-16x16.png">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -107,6 +120,15 @@
         {% endif %}
 	     -->
       </div>
+      <nav id="slide-menu">
+        <ul>
+            <li class="timeline">Timeline</li>
+            <li class="events">Events</li>
+            <li class="calendar">Calendar</li>
+            <li class="sep settings">Settings</li>
+            <li class="logout">Logout</li>
+        </ul>
+    </nav>
 		    
 	<section>
 
