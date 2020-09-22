@@ -685,6 +685,121 @@ $data = [
 ---
 
 ## Cart
+### Get Buyer's Cart
+**GET ``/api/v2/users/{{buyerID}}/carts``**
+
+```php
+$cart = $sdk->getCart($buyerId);
+echo $cart['Records'];
+```
+Arguments:
+* `$buyerId` - *(Required)* The buyer's GUID (string)
+
+---
+
+### Add Item to Cart
+**POST ``/api/v2/users/{{buyerID}}/carts``**
+
+Arguments:
+* `$buyerId` - *(Required)* The buyer's GUID (string)
+* `$data`:
+```php
+$data = [
+    'ItemDetail'=> [
+        'ID'=> '00000000-0000-0000-0000-000000000000' // Required. String. Item GUID. If an item has child items, this will be the child item GUID.
+    ],
+    'Quantity'=> 0, //integer. Required
+    'CartItemType'=> 'delivery', //optional
+    'ShippingMethod'=> [
+        'ID'=> '00000000-0000-0000-0000-000000000000' //optional. Shipping Method GUID 
+    ]
+];
+
+$cart = $sdk->addToCart($data, $buyerId);
+echo $cart;
+```
+
+---
+
+### Edit Item in Cart
+**PUT ``/api/v2/users/{{buyerID}}/carts/{{cart-item-ID}}``**
+
+Arguments:
+* `$buyerId` - *(Required)* The buyer's GUID (string)'=
+* `$cartItemId` - *(Required)* The Cart Item ID obtained from the response of **Add item to Cart** API
+* `$data`:
+```php
+$data = [
+    'ItemDetail'=> [
+        'ID'=> '00000000-0000-0000-0000-000000000000' // Required. String. Item GUID. If an item has child items, this will be the child item GUID.
+    ],
+    'Quantity'=> 0, //integer. Required
+    'CartItemType'=> 'delivery', //optional
+    'ShippingMethod'=> [
+        'ID'=> '00000000-0000-0000-0000-000000000000' //optional. Shipping Method GUID 
+    ]
+];
+
+$cart = $sdk->updateCartItem($data, $buyerId, $cartItemId);
+echo $cart;
+```
+
+---
+### Delete Item from Cart
+**DELETE ``/api/v2/users/{{buyerID}}/carts/{{cart-item-ID}}``**
+
+Arguments:
+* `$buyerId` - *(Required)* The buyer's GUID (string)'=
+* `$cartItemId` - *(Required)* The Cart Item ID obtained from the response of **Add item to Cart** API
+
+```php
+$cart = $sdk->deleteCartItem($buyerId, $cartItemId);
+echo $cart;
+```
+
+---
+
+## Orders
+### Get Order by Order GUID
+**GET ``/api/v2/users/{{merchantID}}/orders/{{orderID}}``**
+
+```php
+$orderInfo = $sdk->getOrder($id, $userId);
+echo $orderInfo;
+```
+Arguments:
+* `$id` - *(Required)* The order GUID (string)
+* `userId` - *(Required)* Can be either the Admin GUID or the merchant GUID of the the merchant who owns the order.
+
+---
+
+### Get All Orders of a merchant
+**GET ``/api/v2/users/{{merchantID}}/orders/{{orderID}}``**
+
+```php
+$orderList = $sdk->getOrderHistory($merchantId, $pageSize, $pageNumber);
+echo $orderList;
+```
+Arguments:
+* `$merchantId` - *(Required)* The merchant GUID (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+
+---
+
+### Get All Orders within an Invoice
+**GET ``/api/v2/merchants/{{merchantID}}/transactions/{{invoiceID}}``**
+
+```php
+$orderList = $sdk->getOrderInfoByInvoiceId($merchantId, $invoiceId);
+echo $orderList;
+```
+Arguments:
+* `$merchantId` - *(Required)* The merchant GUID (string)
+* `$invoiceId` - *(Required)* The invoice number (string)
+
+---
+
 
 
 
