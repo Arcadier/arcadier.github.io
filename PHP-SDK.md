@@ -814,7 +814,7 @@ Arguments:
 ---
 
 ### Get all Transactions of a Buyer
-**GET ``/api/v2/users/{{buyerID}}/transactions``**
+**GET ``/api/v2/users/{buyerID}/transactions``**
 
 ```php
 $transactions = $sdk->getBuyerTransactions($buyerId);
@@ -827,7 +827,7 @@ Arguments:
 
 ## Custom Tables
 ### Get Custom Table Contents
-**GET ``api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/``**
+**GET ``api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/``**
 
 ```php
 $custom_table = $sdk->getCustomTable($packageId, $tableName);
@@ -841,12 +841,12 @@ Arguments:
 ---
 
 ### Create Row 
-**POST ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows``**
+**POST ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows``**
 
 ```php
 $data = [
-    `{{column-name1}}` => `string`, // data type depends on what was configured during custom table creation
-    `{{column-name2}}` => 0
+    `{column-name1}` => `string`, // data type depends on what was configured during custom table creation
+    `{column-name2}` => 0
 ];
 
 $new_row = $sdk->createRowEntry($packageId, $tableName, $data);
@@ -859,12 +859,12 @@ Arguments:
 ---
 
 ### Update Row 
-**PUT ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows/{{rowId}}``**
+**PUT ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``**
 
 ```php
 $data = [
-    "{{column-name1}}": "string", // data type depends on what was configured during custom table creation
-    "{{column-name2}}": 0
+    "{column-name1}": "string", // data type depends on what was configured during custom table creation
+    "{column-name2}": 0
 ];
 
 $updated_row = $sdk->editRowEntry($packageId, $tableName, $rowId, $data);
@@ -878,7 +878,7 @@ Arguments:
 ---
 
 ### Delete Row 
-**DELETE ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows/{{rowId}}``**
+**DELETE ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``**
 
 ```php
 $deleted_row = $sdk->deleteRowEntry($packageId, $tableName, $rowId);
@@ -921,7 +921,7 @@ $data = [
     ]
 ];
 
-$new_event_trigger = $sdk->addEventTrigger($data)
+$new_event_trigger = $sdk->addEventTrigger($data);
 echo $new_event_trigger;
 ```
 
@@ -933,7 +933,7 @@ Field definitions:
 * `'Headers' => []` - Array of headers paramaters you wish to send with the payload to the webhook server.
 
 ### Edit Event Trigger
-**PUT ``/api/v2/event-triggers/{{event_trigger_ID}}``**
+**PUT ``/api/v2/event-triggers/{event_trigger_ID}``**
 
 ```php
 $data = [
@@ -951,7 +951,7 @@ $data = [
     ]
 ];
 
-$edit_event_trigger = $sdk->updateEventTrigger($eventTriggerId, $data)
+$edit_event_trigger = $sdk->updateEventTrigger($eventTriggerId, $data);
 echo $edit_event_trigger;
 ```
 Arguments:
