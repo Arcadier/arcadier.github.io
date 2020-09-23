@@ -303,7 +303,7 @@ echo $item_list['Records']; //The actual array of items is in the "Records" fiel
 
 ---
 
-### Searching for an item
+### Search for an item
 
 **POST** **```/api/v2/items```** is mapped to `searchItems($data);`
 
@@ -656,23 +656,7 @@ Arguments:
 More about pagination [here](https://apiv2.arcadier.com/#pagination)
 
 ---
-### Tag an Item
-**POST ``/api/v2/merchants/{merchantID}/items/{itemID}/tags``** is mapped to `tagItem($data, $merchantId, $itemId)`
-
-Arguments:
-* `$merchantId` - *(Required)* The merchant's GUID (string)
-* `$itemId` - *(Required)* The item GUID of the item to tag (string)
-* `$data` - An array of strings:
-
-```php
-$data = [
-	"string_1",
-	"string_2"
-];
-```
-
----
-### Delete Tags
+### Delete Item Tags
 **DELETE ``/api/v2/tags``** is mapped to `deleteTags($data)`
 
 ```php
@@ -686,7 +670,7 @@ $data = [
 
 ## Cart
 ### Get Buyer's Cart
-**GET ``/api/v2/users/{{buyerID}}/carts``**
+**GET ``/api/v2/users/{buyerID}/carts``**
 
 ```php
 $cart = $sdk->getCart($buyerId);
@@ -698,7 +682,7 @@ Arguments:
 ---
 
 ### Add Item to Cart
-**POST ``/api/v2/users/{{buyerID}}/carts``**
+**POST ``/api/v2/users/{buyerID}/carts``**
 
 Arguments:
 * `$buyerId` - *(Required)* The buyer's GUID (string)
@@ -722,7 +706,7 @@ echo $cart;
 ---
 
 ### Edit Item in Cart
-**PUT ``/api/v2/users/{{buyerID}}/carts/{{cart-item-ID}}``**
+**PUT ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``**
 
 Arguments:
 * `$buyerId` - *(Required)* The buyer's GUID (string)'=
@@ -746,7 +730,7 @@ echo $cart;
 
 ---
 ### Delete Item from Cart
-**DELETE ``/api/v2/users/{{buyerID}}/carts/{{cart-item-ID}}``**
+**DELETE ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``**
 
 Arguments:
 * `$buyerId` - *(Required)* The buyer's GUID (string)'=
@@ -761,7 +745,7 @@ echo $cart;
 
 ## Orders
 ### Get Order by Order GUID
-**GET ``/api/v2/users/{{merchantID}}/orders/{{orderID}}``**
+**GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
 
 ```php
 $orderInfo = $sdk->getOrder($id, $userId);
@@ -774,7 +758,7 @@ Arguments:
 ---
 
 ### Get All Orders of a merchant
-**GET ``/api/v2/users/{{merchantID}}/orders/{{orderID}}``**
+**GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
 
 ```php
 $orderList = $sdk->getOrderHistory($merchantId, $pageSize, $pageNumber);
@@ -788,7 +772,7 @@ Arguments:
 ---
 
 ### Get All Orders within an Invoice
-**GET ``/api/v2/merchants/{{merchantID}}/transactions/{{invoiceID}}``**
+**GET ``/api/v2/merchants/{merchantID}/transactions/{invoiceID}``**
 
 ```php
 $orderList = $sdk->getOrderInfoByInvoiceId($merchantId, $invoiceId);
@@ -799,6 +783,187 @@ Arguments:
 * `$invoiceId` - *(Required)* The invoice number (string)
 
 ---
+
+## Transactions
+### Get Transaction Info by Invoice number
+**GET ``/api/v2/admins/{adminID}/transactions/{invoiceID}``**
+
+```php
+$transac_info = $sdk->getTransactionInfo($invoiceNo);
+echo $transac_info;
+```
+Arguments:
+* `$invoiceNo` - *(Required)* The invoice number (string)
+
+---
+
+### Get all Transactions of marketplace
+**GET ``/api/v2/admins/{adminID}/transactions``**
+
+```php
+$transactions = $sdk->getAllTransactions($startDate = null, $endDate = null, $pageSize = null, $pageNumber = null);
+echo $transactions['Records'];
+```
+
+Arguments:
+* `$pageSize` - *(Optional)* The number of results in one response. (string)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$startDate` - *(Optional)* The lower limit of the time at which you want to start filtering. (integer - Unix timestamp)
+* `$endDate` - *(Optional)* The upper limit of the time at which you want to end filetering. (integer - Unix timestamp)
+
+---
+
+### Get all Transactions of a Buyer
+**GET ``/api/v2/users/{{buyerID}}/transactions``**
+
+```php
+$transactions = $sdk->getBuyerTransactions($buyerId);
+echo $transactions['Records'];
+```
+Arguments:
+* `$buyerId` - *(Required)* The buyer GUID (string)
+
+---
+
+## Custom Tables
+### Get Custom Table Contents
+**GET ``api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/``**
+
+```php
+$custom_table = $sdk->getCustomTable($packageId, $tableName);
+echo $custom_table['Records'];
+```
+
+Arguments:
+* `$packageId` - *(Required)* The Plug-In ID (string)
+* `$tableName` - *(Required)* The table name (string)
+
+---
+
+### Create Row 
+**POST ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows``**
+
+```php
+$data = [
+    `{{column-name1}}` => `string`, // data type depends on what was configured during custom table creation
+    `{{column-name2}}` => 0
+];
+
+$new_row = $sdk->createRowEntry($packageId, $tableName, $data);
+echo $new_row;
+```
+Arguments:
+* `$packageId` - *(Required)* The Plug-In ID (string)
+* `$tableName` - *(Required)* The table name (string)
+
+---
+
+### Update Row 
+**PUT ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows/{{rowId}}``**
+
+```php
+$data = [
+    "{{column-name1}}": "string", // data type depends on what was configured during custom table creation
+    "{{column-name2}}": 0
+];
+
+$updated_row = $sdk->editRowEntry($packageId, $tableName, $rowId, $data);
+echo $update_row;
+```
+Arguments:
+* `$packageId` - *(Required)* The Plug-In ID (string)
+* `$tableName` - *(Required)* The table name (string)
+* `$rowId` - *(Required)* The ID of the row (string)
+
+---
+
+### Delete Row 
+**DELETE ``/api/v2/plugins/{{packageID}}/custom-tables/{{custom-table-name}}/rows/{{rowId}}``**
+
+```php
+$deleted_row = $sdk->deleteRowEntry($packageId, $tableName, $rowId);
+echo $deleted_row;
+```
+Arguments:
+* `$packageId` - *(Required)* The Plug-In ID (string)
+* `$tableName` - *(Required)* The table name (string)
+* `$rowId` - *(Required)* The ID of the row (string)
+
+---
+
+## Event Triggers
+### Get Event Triggers
+**GET ``/api/v2/event-triggers/``**
+
+```php
+$event_trigger_list = $sdk->getEventTriggers();
+echo $event_trigger_list;
+```
+
+---
+
+### Create Event Trigger
+**POST ``/api/v2/event-triggers/``**
+
+```php
+$data = [
+    'Uri' => 'string',  //required
+    'Filters' => [      //required
+        'string', 
+        'string'
+    ],
+    'Description' => 'string',
+    'IsPaused' => false,
+    'Headers' => [
+        'Authorization' => 'string',
+        'CustomHeader' => 'string',
+        'Alice' => 'Bob'
+    ]
+];
+
+$new_event_trigger = $sdk->addEventTrigger($data)
+echo $new_event_trigger;
+```
+
+Field definitions:
+* `'Uri'` - The URL of the webhook to send the payload to.
+* `'Filters' => []` - Array of names of the events which act as trigger. More details [here](https://apiv2.arcadier.com/#cda751b9-e7a4-4d50-b660-72ec9cd4d4f0).
+* `'Description'` - Short description of the event trigger
+* `'IsPaused'` - (Boolean) Halts the triggering of this event to the specified URI. This does not delete the event trigger.
+* `'Headers' => []` - Array of headers paramaters you wish to send with the payload to the webhook server.
+
+### Edit Event Trigger
+**PUT ``/api/v2/event-triggers/{{event_trigger_ID}}``**
+
+```php
+$data = [
+    'Uri' => 'string',  //required
+    'Filters' => [      //required
+        'string', 
+        'string'
+    ],
+    'Description' => 'string',
+    'IsPaused' => false,
+    'Headers' => [
+        'Authorization' => 'string',
+        'CustomHeader' => 'string',
+        'Alice' => 'Bob'
+    ]
+];
+
+$edit_event_trigger = $sdk->updateEventTrigger($eventTriggerId, $data)
+echo $edit_event_trigger;
+```
+Arguments:
+* `$eventTriggerId` - the ID of the event trigger obtained after creating it (string)
+* `$data`:
+
+Field definitions:
+* `'Uri'` - The URL of the webhook to send the payload to.
+* `'Filters' => []` - Array of names of the events which act as trigger. More details [here](https://apiv2.arcadier.com/#cda751b9-e7a4-4d50-b660-72ec9cd4d4f0).
+* `'Description'` - Short description of the event trigger
+* `'IsPaused'` - (Boolean) Halts the triggering of this event to the specified URI. This does not delete the event trigger.
+* `'Headers' => []` - Array of headers paramaters you wish to send with the payload to the webhook server.
 
 
 
