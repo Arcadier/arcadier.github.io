@@ -4592,5 +4592,6 @@ body.menu-active nav#slide-menu ul {
     float: left;
     display: block;
     position: fixed;
+    margin-top: 71px;
 }
 
