@@ -3,25 +3,6 @@ layout: page
 title: "PHP-SDK"
 permalink: /php-sdk/
 ---
-# Table of contents
-* [Authentication & SSO]()
-* [User Accounts & Passwords]()
-* [Addresses]()
-* [Items]()
-* [Cart]()
-* [Orders]()
-* [Transactions & Invoices]()
-* [Custom Tables]()
-* [Event Triggers]()
-* [E-mail]()
-* [Static]()
-* [Categories]()
-* [Marketplace]()
-* [Custom Fields]()
-* [Shipping/Delivery]()
-* [Checkout]()
-* Payment Gateways
-* Panels
 
 # Initialising
 Download the required libraries to your directory using the following Composer command line:
