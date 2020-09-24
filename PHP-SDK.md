@@ -24,7 +24,7 @@ require "vendor\arcadier\arcadier-php\src\api.php";
 $sdk = new ApiSdk(); #this variable does not have to be $sdk, but in this documentation, it will be used throughout
 ```
 
-## Authentication and SSO
+<h2><a name="#Authentication and SSO">Authentication and SSO</a></h2>
 ### Single Sign On
 **POST ``/api/v2/sso``**
 
@@ -1003,7 +1003,7 @@ Field Definitions for `$data` can be found [here](https://apiv2.arcadier.com/#68
 
 ---
 
-## Custom Tables
+<h2><a name="#Custom Tables">Custom Tables</a></h2>
 ### Get Custom Table Contents
 **GET ``api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/``**
 
