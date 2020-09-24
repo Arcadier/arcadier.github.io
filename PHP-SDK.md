@@ -841,7 +841,7 @@ Arguments:
 ---
 
 ### Update An Order
-**POST ``/api/v2/merchants/{{merchantID}}/orders/{{orderID}}``**
+**POST ``/api/v2/merchants/{merchantID}/orders/{orderID}``**
 
 ```php
 $data = [
@@ -877,7 +877,7 @@ Arguments:
 Field Definitions for `$data` can be found [here](https://apiv2.arcadier.com/#5b14eb44-8967-480e-82ea-166378754b2b).
 
 ### Edit Several Orders' Details
-**POST ``/api/v2/admins/{{adminID}}/orders``**
+**POST ``/api/v2/admins/{adminID}/orders``**
 ```php
 $data = [
     [ //order #1
@@ -975,7 +975,7 @@ Arguments:
 ---
 
 ### Update Array of Transaction's Details
-**PUT ``/api/v2/admins/{{adminID}}/invoices/{{invoiceID}}``**
+**PUT ``/api/v2/admins/{adminID}/invoices/{invoiceID}``**
 
 ```php
 $data = [
@@ -1294,7 +1294,7 @@ echo $category_hierarchy;
 ---
 
 ### Create a Category
-**POST ``/api/v2/admins/{{adminID}}/categories``**
+**POST ``/api/v2/admins/{adminID}/categories``**
 
 ```php
 $data = [
@@ -1325,7 +1325,7 @@ Field definitions:
 ---
 
 ### Edit a Category
-**PUT ``/api/v2/admins/{{adminID}}/categories/{categoryID}``**
+**PUT ``/api/v2/admins/{adminID}/categories/{categoryID}``**
 
 ```php
 $data = [
@@ -1360,7 +1360,7 @@ Field definitions:
 ---
 
 ### Sort Categories
-**PUT ``/api/v2/admins/{{adminID}}/categories``**
+**PUT ``/api/v2/admins/{adminID}/categories``**
 
 ```php
 $data = [
@@ -1376,7 +1376,7 @@ echo $sorted_list;
 ---
 
 ### Delete a Category
-**DELETE ``/api/v2/admins/{{adminID}}/categories/{categoryID}``**
+**DELETE ``/api/v2/admins/{adminID}/categories/{categoryID}``**
 ```php
 $deleted_category = $sdk->deleteCategory($categoryId);
 echo $deleted_category;
@@ -1438,7 +1438,7 @@ Field Definitions:
 
 ## Shipping/Delivery
 ### Get Shipping Methods
-**GET ``/api/v2/merchants/{{merchantID}}/shipping-methods/``**
+**GET ``/api/v2/merchants/{merchantID}/shipping-methods/``**
 
 ```php
 $shipping_methods = $sdk->getShippingMethods($merchantId);
@@ -1446,7 +1446,7 @@ echo $shipping_methods;
 ```
 
 ### Get Delivery Rates (Weight/Price)
-**GET ``/api/v2/merchants/{{adminID}}/shipping-methods/``**
+**GET ``/api/v2/merchants/{adminID}/shipping-methods/``**
 
 ```php
 $delivery_rates = $sdk->getDeliveryRates();
@@ -1455,7 +1455,7 @@ echo $delivery_rates;
 ```
 
 ### Create Shipping Method/Delivery Rate
-**POST ``/api/v2/merchants/{{merchantID}}/shipping-methods``**
+**POST ``/api/v2/merchants/{merchantID}/shipping-methods``**
 
 ```php
 $data = [
@@ -1482,7 +1482,7 @@ Field Definitions:
 ---
 
 ### Edit Shipping Method/Delivery Rate
-**PUT ``/api/v2/merchants/{{merchantID}}/shipping-methods/{{shippingmethodID}}``**
+**PUT ``/api/v2/merchants/{merchantID}/shipping-methods/{shippingmethodID}``**
 
 ```php
 $data = [
@@ -1510,7 +1510,7 @@ Field Definitions:
 ---
 
 ### Delete Shipping Method/Delivery Rate
-**DELETE ``/api/v2/merchants/{{merchantID}}/shipping-methods/{{shippingmethodID}}``**
+**DELETE ``/api/v2/merchants/{merchantID}/shipping-methods/{shippingmethodID}``**
 
 ```php
 $deleted_shipping = $sdk->deleteShippingMethod($merchantId, $shippingMethodId);
@@ -1525,7 +1525,7 @@ Arguments:
 
 ## Custom Fields
 ### Get Custom Field Definitions
-**GET ``/api/v2/admins/{{adminID}}/custom-field-definitions/``**
+**GET ``/api/v2/admins/{adminID}/custom-field-definitions/``**
 
 ```php
 $cf = $sdk->getCustomFields()
@@ -1535,7 +1535,7 @@ echo $cf['Records'];
 --- 
 
 ### Get Custom Fields of a Plug-In
-**GET ``/api/v2/packages/{{packageID}}/custom-field-definitions``**
+**GET ``/api/v2/packages/{packageID}/custom-field-definitions``**
 
 ```php
 $plugin_cf = $sdk->getPluginCustomFields($packageId);
@@ -1548,7 +1548,7 @@ Arguments:
 ---
 
 ### Create A Custom Field
-**POST ``/api/v2/admins/{{adminID}}/custom-field-definitions``**
+**POST ``/api/v2/admins/{adminID}/custom-field-definitions``**
 
 ```php
 $data = [
@@ -1580,7 +1580,7 @@ Field Definitions for `$data`: All the field definitions for this request can be
 ---
 
 ### Edit A Custom Field
-**PUT ``/api/v2/admins/{{adminID}}/custom-field-definitions/{{customfield-code}}``**
+**PUT ``/api/v2/admins/{adminID}/custom-field-definitions/{customfield-code}``**
 
 ```php
 $data = [
@@ -1615,7 +1615,7 @@ Field Definitions for `$data`: All the field definitions for this request can be
 ---
 
 ### Delete A Custom Field
-**DELETE ``/api/v2/admins/{{adminID}}/custom-field-definitions/{{custom-field-code}}``**
+**DELETE ``/api/v2/admins/{adminID}/custom-field-definitions/{custom-field-code}``**
 
 ```php
 $deleted_cf = $sdk->deleteCustomField($code);
@@ -1629,7 +1629,7 @@ Arguments:
 
 ## Checkout
 ### Generate Invoice and Order Details from cart
-**POST ``/api/v2/users/{{buyerID}}/invoices/carts``**
+**POST ``/api/v2/users/{buyerID}/invoices/carts``**
 
 ```php
 $data = [
