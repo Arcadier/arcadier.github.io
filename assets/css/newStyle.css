@@ -4430,7 +4430,7 @@ ul.pt_office_lt li {
 
 .welcome-body section {
     max-width: 980px;
-    margin: 0 auto;
+    margin-top: 71px;
 }
 
 .welcome-body section p {
@@ -4594,6 +4594,3 @@ body.menu-active nav#slide-menu ul {
     position: fixed;
 }
 
-section {
-    margin-top: 71px;
-}
