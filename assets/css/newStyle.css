@@ -4588,4 +4588,7 @@ body.menu-active nav#slide-menu ul {
     opacity: 1;
 }
 
-
+.sidebar {
+    float: left;
+    display: block;
+}
