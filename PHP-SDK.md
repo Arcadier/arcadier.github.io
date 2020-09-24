@@ -4,10 +4,24 @@ title: "PHP-SDK"
 permalink: /php-sdk/
 ---
 # Table of contents
+* [Authentication & SSO]()
 * [User Accounts & Passwords]()
 * [Addresses]()
 * [Items]()
 * [Cart]()
+* [Orders]()
+* [Transactions & Invoices]()
+* [Custom Tables]()
+* [Event Triggers]()
+* [E-mail]()
+* [Static]()
+* [Categories]()
+* [Marketplace]()
+* [Custom Fields]()
+* [Shipping/Delivery]()
+* [Checkout]()
+* Payment Gateways
+* Panels
 
 # Initialising
 Download the required libraries to your directory using the following Composer command line:
@@ -73,7 +87,7 @@ echo $result['Result'];
 ---
 ## User Accounts
 ### Get A User's details
-
+ 
 **GET** **```/api/v2/users/{userID}```**
 ```php 
 $userInfo = $sdk->getUserInfo($id, $include);
@@ -96,8 +110,8 @@ echo $buyerList['Records'];
 
 Arguments:
 * `$keywords` - *(Optional)* Search all buyers having a certain keyword in their details (name/e-mail). (string)
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ---
 ### Get All Merchants
@@ -109,8 +123,8 @@ echo $merchantList['Records'];
 
 Arguments:
 * `$keywords` - *(Optional)* Search all merchants having a certain keyword in their details (name/e-mail). (string)
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ---
 ### Get All Users
@@ -123,8 +137,8 @@ echo $userList['Records'];
 
 Arguments:
 * `$keywords` - *(Optional)* Search all users having a certain keyword in their details (name/e-mail). (string)
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ---
 ### Create Buyer Account
@@ -335,8 +349,8 @@ Arguments:
 **GET** **```/api/v2/items```** is mapped to `getAllItems($pageSize = null, $pageNumber = null);`
 
 Arguments:
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ```php
 $item_list = $sdk->getAllItems();
@@ -692,8 +706,8 @@ $data = [
 **GET ``/api/v2/tags``** is mapped to `getItemTags($pageSize = null, $pageNumber = null)`
 
 Arguments:
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 More about pagination [here](https://apiv2.arcadier.com/#pagination)
 
@@ -808,8 +822,8 @@ echo $orderList;
 ```
 Arguments:
 * `$merchantId` - *(Required)* The merchant GUID (string)
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ---
 
@@ -823,6 +837,99 @@ echo $orderList;
 Arguments:
 * `$merchantId` - *(Required)* The merchant GUID (string)
 * `$invoiceId` - *(Required)* The invoice number (string)
+
+---
+
+### Update An Order
+**POST ``/api/v2/merchants/{{merchantID}}/orders/{{orderID}}``**
+
+```php
+$data = [
+    'FulfilmentStatus'=> 'string',
+    'PaymentStatus'=> 'string',
+    'Balance'=> 0,
+    'DeliveryToAddress'=> [
+        'ID'=> '00000000-0000-0000-0000-000000000000'
+    ],
+    'CartItemType'=> 'string',
+    'Freight'=> 0,
+    'DiscountAmount'=> 0,
+    'Surcharge'=> 0,
+    'CustomFields'=> [
+        [
+            'Code'=> 'string',
+            'Values'=> [
+            	'string'
+            ]
+        ]
+    ]
+];
+
+$updated_order = $sdk->editOrder($merchantId, $orderId, $data)
+echo $updated_order;
+```
+
+Arguments:
+* `$merchantId` - the GUID of the merchant who is the owner of the order. This can also be the Admin GUID (string)
+* `$orderId` - The order GUID (string)
+* `$data`
+
+Field Definitions for `$data` can be found [here](https://apiv2.arcadier.com/#5b14eb44-8967-480e-82ea-166378754b2b).
+
+### Edit Several Orders' Details
+**POST ``/api/v2/admins/{{adminID}}/orders``**
+```php
+$data = [
+    [ //order #1
+        'ID' => '00000000-0000-0000-0000-000000000000',
+        'FulfilmentStatus'=> 'string',
+        'PaymentStatus'=> 'string',
+        'Balance'=> 0,
+        'DeliveryToAddress'=> [
+            'ID'=> '00000000-0000-0000-0000-000000000000'
+        ],
+        'CartItemType'=> 'string',
+        'Freight'=> 0,
+        'DiscountAmount'=> 0,
+        'Surcharge'=> 0,
+        'CustomFields'=> [
+            [
+                'Code'=> 'string',
+                'Values'=> [
+                    'string'
+                ]
+            ]
+        ]
+    ],
+    [ //order #2
+        'ID' => '00000000-0000-0000-0000-000000000000',
+        'FulfilmentStatus'=> 'string',
+        'PaymentStatus'=> 'string',
+        'Balance'=> 0,
+        'DeliveryToAddress'=> [
+            'ID'=> '00000000-0000-0000-0000-000000000000'
+        ],
+        'CartItemType'=> 'string',
+        'Freight'=> 0,
+        'DiscountAmount'=> 0,
+        'Surcharge'=> 0,
+        'CustomFields'=> [
+            [
+                'Code'=> 'string',
+                'Values'=> [
+                    'string'
+                ]
+            ]
+        ]
+    ]
+];
+
+$updated_orders = $sdk->updateOrders($data)
+echo $updated_orders;
+```
+
+Field Definitions for `$data` can be found [here](https://apiv2.arcadier.com/#02990d95-cb5f-4040-9965-a88bcb342c1c).
+
 
 ---
 
@@ -848,8 +955,8 @@ echo $transactions['Records'];
 ```
 
 Arguments:
-* `$pageSize` - *(Optional)* The number of results in one response. (string)
-* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (string)
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 * `$startDate` - *(Optional)* The lower limit of the time at which you want to start filtering. (integer - Unix timestamp)
 * `$endDate` - *(Optional)* The upper limit of the time at which you want to end filetering. (integer - Unix timestamp)
 
@@ -864,6 +971,54 @@ echo $transactions['Records'];
 ```
 Arguments:
 * `$buyerId` - *(Required)* The buyer GUID (string)
+
+---
+
+### Update Array of Transaction's Details
+**PUT ``/api/v2/admins/{{adminID}}/invoices/{{invoiceID}}``**
+
+```php
+$data = [
+  [
+    'Payee' => [
+      'ID' => '00000000-0000-0000-0000-000000000000'
+    ],
+    'Order' => [
+      'ID' => '00000000-0000-0000-0000-000000000000'
+    ],
+    'Total' => 0,
+    'Fee' => 0,
+    'Status' => 'string',
+    'Refunded' => false,
+    'RefundedRef' => 'string',
+    'GatewayPayKey' => 'string',
+    'GatewayTransactionID' => 'string',
+    'GatewayStatus' => 'string',
+    'GatewayTimeStamp' => 'string',
+    'GatewayRef' => 'string',
+    'GatewayCorrelationId' => 'string',
+    'GatewaySenderId' => 'string',
+    'GatewaySenderRef' => 'string',
+    'GatewayReceiverId' => 'string',
+    'GatewayReceiverRef' => 'string',
+    'Gateway' => [
+      'Code' => 'string'
+    ],
+    'DateTimePaid' => 0
+  ]
+];
+
+$updated_transaction = $sdk->updateTransaction($invoiceNo, $data);
+echo $updated_transaction;
+```
+
+Arguments:
+* `$invoiceNo` - the invoice number of the invoice to be updated
+* `$data`
+
+Field Definitions for `$data` can be found [here](https://apiv2.arcadier.com/#68a1094c-77b6-45fb-acc2-aec053d94a28).
+
+---
 
 ---
 
@@ -1110,5 +1265,387 @@ echo $payment_statuses['Records'];
 $timezones = $sdk->getTimezones();
 echo $timezones['Records'];
 ```
+
+---
+
+## Categories
+### Get Category List
+**GET ``/api/v2/categories``**
+
+```php
+$category_list = $sdk->getCategories($pageSize = null, $pageNumber = null);
+echo $category_list['Records'];
+```
+
+Arguments:
+* `$pageSize` - *(Optional)* The number of results in one response. (integer)
+* `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
+
+---
+
+### Get Category Hierarchy
+**GET ``/api/v2/categories/hierarchy``**
+
+```php
+$category_hierarchy = $sdk->getCategoriesWithHierarchy();
+echo $category_hierarchy;
+```
+
+---
+
+### Create a Category
+**POST ``/api/v2/admins/{{adminID}}/categories``**
+
+```php
+$data = [
+    'Name' => 'string', //required
+    'Description' => 'string',
+    'SortOrder' => 0,
+    'Media' => [ //required
+        [
+            'MediaUrl' => 'string'
+        ]
+    ],
+    'ParentCategoryID' => '00000000-0000-0000-0000-000000000000',
+    'Level' => 0
+];
+
+$new_category = $sdk->createCategory($data);
+echo $new_category;
+```
+
+Field definitions:
+* `'Name'` - Name of the category
+* `'Description'` - Short Description of the category
+* `'SortOrder'` - Rank in which it will appear on category lists
+* `'Media' => [ 'MediaUrl']` - The URL of the image to be set for the category
+* `'ParentCategoryID'` - The GUID of the category which will be the parent of this new category. Omit this field if the category is going to be a parent/main category
+* `'Level'` - Parent Categories have a level of `0`. subsequent levels of child categories have higher levels.
+
+---
+
+### Edit a Category
+**PUT ``/api/v2/admins/{{adminID}}/categories/{categoryID}``**
+
+```php
+$data = [
+    'Name' => 'string', 
+    'Description' => 'string',
+    'SortOrder' => 0,
+    'Media' => [ 
+        [
+            'MediaUrl' => 'string'
+        ]
+    ],
+    'ParentCategoryID' => '00000000-0000-0000-0000-000000000000',
+    'Level' => 0
+];
+
+$edited_category = $sdk->updateCategory($categoryId, $data);
+echo $edited_category;
+```
+
+Arguments:
+* `$categoryId` - the category GUID of the category to edit
+* `$data`
+
+Field definitions:
+* `'Name'` - Name of the category
+* `'Description'` - Short Description of the category
+* `'SortOrder'` - Rank in which it will appear on category lists
+* `'Media' => [ 'MediaUrl']` - The URL of the image to be set for the category
+* `'ParentCategoryID'` - The GUID of the category which will be the parent of this new category. Omit this field if the category is going to be a parent/main category
+* `'Level'` - Parent Categories have a level of `0`. subsequent levels of child categories have higher levels.
+
+---
+
+### Sort Categories
+**PUT ``/api/v2/admins/{{adminID}}/categories``**
+
+```php
+$data = [
+    "Category GUID #1", //string
+    "Category GUID #2",
+    "Category GUID #3"
+];
+
+$sorted_list = $sdk->sortCategories($data);
+echo $sorted_list;
+```
+
+---
+
+### Delete a Category
+**DELETE ``/api/v2/admins/{{adminID}}/categories/{categoryID}``**
+```php
+$deleted_category = $sdk->deleteCategory($categoryId);
+echo $deleted_category;
+```
+
+Arguments:
+* `$categoryId` - the category GUID of the category to edit
+
+---
+
+## Marketplace
+### Get Marketplace Info
+**GET ``/api/v2/marketplaces/``**
+
+```php
+$mp = $sdk->getMarketplaceInfo();
+echo $mp;
+```
+
+---
+
+### Update Marketplace Info
+**POST ``/api/v2/marketplaces/``**
+
+```php
+$data = [
+   'CustomFields' => [
+        [
+            'Code' => 'string', //the custom field code of an existing custom field
+            'Values' => [
+                'string' //the value to store. Data type depends on what was configured when the custom field was created.
+            ]
+        ]
+    ]
+];
+
+$updated_mp = $sdk->updateMarketplaceInfo($data);
+echo $updated_mp;
+```
+
+### Customize/Shorten URL
+**POST ``/api/v2/rewrite-rules``**
+
+```php
+$data = [
+    'Key' => 'string',
+    'Value' => 'string'
+];
+
+$res = $sdk->customiseURL($data)
+echo $res;
+```
+
+Field Definitions:
+* `'Key'` - The custom URL slug
+* `'Value'` - The default URL slug to replace
+
+---
+
+## Shipping/Delivery
+### Get Shipping Methods
+**GET ``/api/v2/merchants/{{merchantID}}/shipping-methods/``**
+
+```php
+$shipping_methods = $sdk->getShippingMethods($merchantId);
+echo $shipping_methods;
+```
+
+### Get Delivery Rates (Weight/Price)
+**GET ``/api/v2/merchants/{{adminID}}/shipping-methods/``**
+
+```php
+$delivery_rates = $sdk->getDeliveryRates();
+echo $delivery_rates;
+
+```
+
+### Create Shipping Method/Delivery Rate
+**POST ``/api/v2/merchants/{{merchantID}}/shipping-methods``**
+
+```php
+$data = [
+	'Courier' => 'string',
+	'Price' => 0, //required
+	'CombinedPrice' => 0, 
+	'CurrencyCode' => 'string', //required
+	'Description' => 'string'
+];
+$new_shipping = $sdk->createShippingMethod($merchantId, $data);
+echo $new_shipping;
+```
+
+Arguments:
+* `$merchantId` - The merchant's GUID (string)
+* `$data`
+
+Field Definitions:
+* `'Courier'` - The shipping method name
+* `'Price'` and `'CombinedPrice'` - Detailed explanations of how to use these 2 fields together is explained [here](https://apiv2.arcadier.com/#4fc81ed1-97b5-45ce-b1e9-51fee0a9916e).
+* `'CurrencyCode'` -  The currency in which the shipping method operates, eg: USD or SGD
+* `'Description'` - Short description of the shipping method.
+
+---
+
+### Edit Shipping Method/Delivery Rate
+**PUT ``/api/v2/merchants/{{merchantID}}/shipping-methods/{{shippingmethodID}}``**
+
+```php
+$data = [
+	'Courier' => 'string',
+	'Price' => 0, //required
+	'CombinedPrice' => 0, 
+	'CurrencyCode' => 'string', //required
+	'Description' => 'string'
+];
+$edited_shipping = $sdk->updateShippingMethod($merchantId, $shippingMethodId, $data)
+echo $edited_shipping;
+```
+
+Arguments:
+* `$merchantId` - The merchant's GUID (string)
+* `$shippingMethodId` - The shipping GUID to be edited (string)
+* `$data`
+
+Field Definitions:
+* `'Courier'` - The shipping method name
+* `'Price'` and `'CombinedPrice'` - Detailed explanations of how to use these 2 fields together is explained [here](https://apiv2.arcadier.com/#4fc81ed1-97b5-45ce-b1e9-51fee0a9916e).
+* `'CurrencyCode'` -  The currency in which the shipping method operates, eg: USD or SGD
+* `'Description'` - Short description of the shipping method.
+
+---
+
+### Delete Shipping Method/Delivery Rate
+**DELETE ``/api/v2/merchants/{{merchantID}}/shipping-methods/{{shippingmethodID}}``**
+
+```php
+$deleted_shipping = $sdk->deleteShippingMethod($merchantId, $shippingMethodId);
+echo $deleted_shipping;
+```
+
+Arguments:
+* `$merchantId` - The merchant's GUID (string)
+* `$shippingMethodId` - The shipping GUID to be deleted (string)
+
+---
+
+## Custom Fields
+### Get Custom Field Definitions
+**GET ``/api/v2/admins/{{adminID}}/custom-field-definitions/``**
+
+```php
+$cf = $sdk->getCustomFields()
+echo $cf['Records'];
+```
+
+--- 
+
+### Get Custom Fields of a Plug-In
+**GET ``/api/v2/packages/{{packageID}}/custom-field-definitions``**
+
+```php
+$plugin_cf = $sdk->getPluginCustomFields($packageId);
+echo $plugin_cf;
+```
+
+Arguments:
+* `$packageId` - The ID of the Plug-In (string)
+
+---
+
+### Create A Custom Field
+**POST ``/api/v2/admins/{{adminID}}/custom-field-definitions``**
+
+```php
+$data = [
+  'Name' => 'string',
+  'IsMandatory' => true,
+  'SortOrder' => 0,
+  'DataInputType' => 'string',
+  'DataRegex' => 'string',
+  'MinValue' => 0,
+  'MaxValue' => 0,
+  'ReferenceTable' => 'string',
+  'DataFieldType' => 'string',
+  'IsSearchable' => true,
+  'IsSensitive' => true,
+  'Active' => true,
+  'Options' => [
+    [
+      'Name' => 'string'
+    ]
+  ]
+];
+
+$new_cf = $sdk->createCustomField($data);
+echo $new_cf;
+```
+
+Field Definitions for `$data`: All the field definitions for this request can be found [here](https://github.com/Arcadier/Coding-Tutorials/tree/master/Creating%20Custom%20Fields).
+
+---
+
+### Edit A Custom Field
+**PUT ``/api/v2/admins/{{adminID}}/custom-field-definitions/{{customfield-code}}``**
+
+```php
+$data = [
+  'Name' => 'string',
+  'IsMandatory' => true,
+  'SortOrder' => 0,
+  'DataInputType' => 'string',
+  'DataRegex' => 'string',
+  'MinValue' => 0,
+  'MaxValue' => 0,
+  'ReferenceTable' => 'string',
+  'DataFieldType' => 'string',
+  'IsSearchable' => true,
+  'IsSensitive' => true,
+  'Active' => true,
+  'Options' => [
+    [
+      'Name' => 'string'
+    ]
+  ]
+];
+
+$updated_cf = $sdk->updateCustomField($code, $data)
+echo $updated_cf;
+```
+
+Arguments:
+* `$code` - The custom field code obtained after creating it/getting its definition
+
+Field Definitions for `$data`: All the field definitions for this request can be found [here](https://github.com/Arcadier/Coding-Tutorials/tree/master/Creating%20Custom%20Fields).
+
+---
+
+### Delete A Custom Field
+**DELETE ``/api/v2/admins/{{adminID}}/custom-field-definitions/{{custom-field-code}}``**
+
+```php
+$deleted_cf = $sdk->deleteCustomField($code);
+echo $deleted_cf;
+```
+
+Arguments:
+* `$code` - The custom field code obtained after creating it/getting its definition
+
+---
+
+## Checkout
+### Generate Invoice and Order Details from cart
+**POST ``/api/v2/users/{{buyerID}}/invoices/carts``**
+
+```php
+$data = [
+    'Cart Item ID #1', //the cart item ID
+    'Cart Item ID #2',
+    'Cart Item ID #3'
+];
+
+$generate_details = $sdk->generateInvoice($buyerId, $data);
+echo $generate_details;
+```
+
+Arguments:
+* `$buyerID` - The BUyer's GUID (string)
+* `$data`
+
+Field Definitions in `$data`: the difference between an "item ID" and a "cart item ID" is explained [here](https://apiv2.arcadier.com/#4b0bc4da-201c-472e-8deb-1a2e1099f908)
 
 ---
