@@ -4591,4 +4591,5 @@ body.menu-active nav#slide-menu ul {
 .sidebar {
     float: left;
     display: block;
+    position: absolute;
 }
