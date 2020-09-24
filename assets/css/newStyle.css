@@ -4430,7 +4430,7 @@ ul.pt_office_lt li {
 
 .welcome-body section {
     max-width: 980px;
-    margin-top: 71px;
+    margin: 71px auto;
 }
 
 .welcome-body section p {
