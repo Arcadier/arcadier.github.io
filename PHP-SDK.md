@@ -28,6 +28,48 @@ Remember to load the SDK by including the following line in all your PHP scripts
 require "vendor\arcadier\arcadier-php\src\api.php";
 $sdk = new ApiSdk(); #this variable does not have to be $sdk, but in this documentation, it will be used throughout
 ```
+
+## Authentication and SSO
+### Single Sign On
+**POST ``/api/v2/sso``**
+
+```php
+$sso_user = $sdk->ssoToken($exUserId, $userEmail);
+$user_ID = $sso_user['AccessToken']['UserId'];
+
+echo $sso_user;
+```
+
+Arguments:
+* `$exUserId` - *(Required)* The user's ID from the external platform (string)
+* `$userEmail` - *(Optional)* This will be registered as the new user's **notification email**
+
+---
+
+### Log In/Get Admin Token
+**POST ``/token``**
+
+Get Admin Token:
+```php
+$admin_token = $sdk->AdminToken();
+echo $admin_token; 
+```
+
+Log a user in:
+```php
+$user = $sdk->LogIn($username, $password); //arguments: the log in credentials of the user
+echo $user;
+```
+
+---
+
+### Log Out
+**POST ``/api/v2/accounts/sign-out``**
+```php
+$result = $sdk->LogOut($token); //$token = the authentication token of the user you wish to terminate the session of
+echo $result['Result'];
+```
+
 ---
 ## User Accounts
 ### Get A User's details
@@ -965,9 +1007,108 @@ Field definitions:
 * `'IsPaused'` - (Boolean) Halts the triggering of this event to the specified URI. This does not delete the event trigger.
 * `'Headers' => []` - Array of headers paramaters you wish to send with the payload to the webhook server.
 
+---
 
+### Delete Event Trigger
+**DELETE ``/api/v2/event-triggers/{event_trigger_ID}``**
 
+```php
+$delete_event_trigger = $sdk->removeEventTrigger($eventTriggerId);
+echo $delete_event_trigger;
+```
+Arguments:
+* `$eventTriggerId` - the ID of the event trigger obtained after creating it (string)
 
+---
 
+## E-Mail
+### Send Email
+**POST ``/api/v2/admins/{adminID}/emails``**
 
+```php
+$data= [
+    'From' => 'string',
+    'To' => 'string',
+    'Body' => 'Your email content. It can be in plaintext or in HTML',
+    'Subject' => 'string'
+];
 
+$sendEmail = $sdk->sendEmail($from, $to, $html, $subject);
+echo $sendEmail;
+```
+
+Argurments:
+* `$from` - The sender's email (string)
+* `$to` - The recipient's email (string)
+* `$html` - Stringified HTML content of the email
+* `$subject` - The subject of the email (string)
+
+---
+
+### Send Email for Invoice number
+**POST ``/api/v2/emails``**
+
+```php
+$sendEmail = $sdk->sendEmailAfterGeneratingInvoice($invoiceNo);
+echo $sendEmail;
+``` 
+
+Arguments:
+* `$invoiceno` - The invoice number (string)
+
+---
+
+## Static
+### Get Fulfilment Statuses
+**GET ``/api/v2/static/fulfilment-statuses``**
+```php
+$fulfilment_statuses = $sdk->getFulfilmentStatuses();
+echo $fulfilment_statuses['Records'];
+```
+
+---
+
+### Get Currencies
+**GET ``/api/v2/static/currencies``**
+```php
+$currencies = $sdk->getCurrencies();
+echo $currencies['Records'];
+```
+
+---
+
+### Get Countries
+**GET ``/api/v2/static/countries``**
+```php
+$countries = $sdk->getCountries();
+echo $countries['Records'];
+```
+
+---
+
+### Get Order Statuses
+**GET ``/api/v2/static/order-statuses``**
+```php
+$order_statuses = $sdk->getOrderStatuses();
+echo $order_statuses['Records'];
+```
+
+---
+
+### Get Payment Statuses
+**GET ``/api/v2/static/payment-statuses``**
+```php
+$payment_statuses = $sdk->getPaymentStatuses();
+echo $payment_statuses['Records'];
+```
+
+---
+
+### Get TimeZones
+**GET ``/api/v2/static/timezones``**
+```php
+$timezones = $sdk->getTimezones();
+echo $timezones['Records'];
+```
+
+---
