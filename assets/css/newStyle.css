@@ -1030,6 +1030,7 @@ footer {
 @media (max-width: 1024px) {
     header .col-sm-2 {
         width: 100%;
+        display: flex;
     }
 
     .menu-togller {
@@ -1038,7 +1039,7 @@ footer {
     }
 
     .menu-togller a {
-        display: block !important;
+        display: flex !important;
         margin-top: 0px;
         width: 25px;
         height: 30px;
@@ -1062,7 +1063,7 @@ footer {
     .arc_logo {
         width: 100%;
 	display: flex;
-    	justify-content: center;
+    	justify-content: flex-start;
 	align-items: center;
     }
 	
@@ -1181,17 +1182,17 @@ background-size: contain;
         margin: 0 0 0 20px;
     }
 
-    .opener {
+/*    .opener {
         position: absolute;
-        right: 40px;
-        top: 11px;
+        right: 20px;
+        top: 8px;
         display: block;
         width: 25px;
         z-index: 1111;
         background: none !important;
         margin: 0 !important;
         transition: all 0.54 linear;
-    }
+    }*/
 
     .opener span {
         height: 3px;
@@ -2285,7 +2286,7 @@ max-width: 970px;
         margin-left: 0;
     }
     .mobile_nav {
-	margin-top: 44px;
+	margin-top: 0;
      }
 }
 
@@ -3456,8 +3457,10 @@ section.cate-section {
 }
 
 .welcome-body .grab_wrapper {
-    margin-top: 71px;
-    padding: 0 30px;
+    
+    padding: 0;
+    width: 100%;
+    margin: 0;
 }
 
 .welcome-body .header-top-nav {
@@ -4597,4 +4600,174 @@ body.menu-active nav#slide-menu ul {
 
 .icon.icon-arrowleft {
     background-image: url(https://tanoo.sandbox.arcadier.io/areas/admin/assets/core/images/back.svg);
+}
+
+/*---------------------------------------------------------------------*/
+
+.sidebar {
+    background: #fff;
+    padding:25px; 
+    width: 300px;
+}
+.scroller {
+    height: calc(100vh - 160px);
+    
+    width: 100%;
+}
+.mb-content  ul{
+    padding:0 0 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+}
+.sidebar h4{
+    margin-bottom: 30px;
+}
+.mb-content  > ul {
+    padding-left: 20px;
+    position: relative;
+}
+.mb-content > ul > li {
+    margin-bottom: 15px;
+}
+.mb-content > ul > li > a{
+    font-size: 14px;
+    font-weight: 700;
+    color: #434850;
+}  
+.mb-content > ul > li > ul > li >a{
+    font-size: 14px;
+    color: #7A7B7B;
+    font-weight: 400;
+    line-height: 30px;
+}
+.mb-content > ul:before {
+    background: #199DD8;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+}
+.mb-content  ul  li {
+    position: relative;
+}
+.mb-content  ul  li.active:before {
+background: #DA4443;
+height: 100%;
+width: 5px;
+content: "";
+position: absolute;
+top: 0;
+left: -22px;
+}
+.mb-track { border-radius: 5px; }
+
+.mb-bar { background-color: #4C9689; }
+
+body > .mb-container > .mb-track {
+  background-color: #110c10;
+  border-radius: 5px;
+}
+.mb-container {
+    position: unset !important; 
+}
+.mb-track-y {
+    opacity: 1 !important;
+    background: #F3E1D9;
+    right: 0 !important;
+    top: 0 !important;
+    border-radius: 0 !important;
+    box-shadow:0 0 2px 0 rgba(0,0,0,.2) inset;
+}
+.mb-track-y .mb-bar {
+    right: 3px !important;
+    top: 0;
+    width: 44% !important;
+    min-height: 10px;
+    background: #fff !important;
+    box-shadow:0 0 1px 0 rgba(0,0,0,.2) ;
+    border-radius: 3px;
+}
+.left-section {
+    float: none;
+    margin-left: 300px;
+    width: auto;
+    margin-top: 71px;
+    padding-left: 0;
+    padding-right: 0;
+}
+.content-inner {
+    font-size: 14px;
+    color: #494949;
+    padding: 10px 20px 10px 50px;
+    background-color: #f1f1f1;
+}
+.content-inner h1 {
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+
+}
+.mobile{
+    display: none !important;
+}
+@media(max-width: 767px){
+    .arc_logo {
+        justify-content: flex-center;
+    }
+    .mobile_nav .menu li {
+        display: flex;
+        flex-direction: column;
+    }
+    .left-section {
+        margin-left: 0;
+    }
+    .sidebar {
+        left: -100%;
+        margin-top: 60px;
+    }
+    .sidebar.active {
+        left: 0%;
+    }
+    .mobile_nav  li > div {
+        margin-left: 30px;
+    }
+    .mobile_nav  li > div.view {
+        margin-top: 15px;
+    }
+/*    .side-togller {
+        position: absolute;
+        top: 10px;
+        left: 30px;
+        width: 25px;
+        height: 30px;
+        z-index: 11;
+
+    }*/
+    .side-togller a {
+        display: block;
+        width: 100%;
+        margin-right: 10px;
+
+    }
+    .side-togller a span {
+        position: relative;
+        content: "";
+        background: #4d4d4d;
+        height: 3px;
+        width: 100%;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .content-inner {
+        padding: 10px 20px;
+    }
+    .mobile {display: block !important;}
+    .arc_logo img {
+        margin-top: 0;
+    }
 }
