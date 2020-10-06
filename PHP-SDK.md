@@ -7,7 +7,7 @@ permalink: /php-sdk/
 # Initialising
 Download the required libraries to your directory using the following Composer command line:
 ```bash
-composer require arcadier/arcadier-php
+
 ```
 
 Find the `.env` file in the following directory created: "vendor\arcadier\arcadier-php\src" and replace the variables with the relevant values:
