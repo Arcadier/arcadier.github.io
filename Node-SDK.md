@@ -143,14 +143,11 @@ console.log(response) //The actual array of matching items is in the "Records" f
 ---
 
 ### Create Item
-**POST ``/api/v2/merchants/{merchantID}/items``** is mapped to `createItem(body, merchantId)`
-
-Arguments:
-* `merchantId` - *(Required)* Merchant GUID (string)
-* `body` - Item details (Object)
+**POST ``/api/v2/merchants/{merchantID}/items``** is mapped to `Items.createItem(body)`
 
 ```javascript
 var body = {
+    "merchantId": "string" //required - the merchat GUID
     "SKU" : "string",
     "Name" : "string", //required
     "BuyerDescription" : "string", //required
@@ -163,46 +160,42 @@ var body = {
     "Active" : true,
     "IsAvailable" : true,
     "CurrencyCode" : "string", //required
-    "Categories" : {
+    "Categories" : [
         {
             "ID" : "string" //Category GUID. Required
         }
-    },
-    "ShippingMethods" : { 
+    ],
+    "ShippingMethods" : [
         {
             "ID" : "string" //Shipping method GUID
         }
-    },
-    "PickupAddresses" : {
-        {
-            "ID" : "string" //Address GUID
-        }
-    },
-    "Media" : {
+    ],
+    
+    "Media" : [
         {
             "MediaUrl" : "string" //URL of image. Required
         }
-    },
-    "Tags" : {
+    ],
+    "Tags" : [
         "string"
-    },
-    "CustomFields" : {
+    ],
+    "CustomFields" : [
         {
             "Code" : "string", //Custom field code
-            "Values" : {
+            "Values" : [
                 "string"
-            }
+            ]
         }
-    },
+    ],
     "HasChildItems" : false,
-    "ChildItems" : { //this whole object can be omitted if HasChildItems is set to false
+    "ChildItems" : [ //this whole object can be omitted if HasChildItems is set to false
         {
-            "Variants" : {
+            "Variants" : [
                 {
                     "Name" : "string",
                     "GroupName" : "string2"
                 }
-            },
+            ],
             "SKU" : "string",
             "Name" : "string",
             "BuyerDescription" : "string",
@@ -215,167 +208,88 @@ var body = {
             "Active" : true,
             "IsAvailable" : true,
             "CurrencyCode" : "string",
-            "Categories" : {
+            "Categories" : [
                 {
                     "ID" : "string"
                 }
-            },
-            "ShippingMethods" : {
+            ],
+            "ShippingMethods" : [
                 {
                     "ID" : "string"
                 }
-            },
-            "PickupAddresses" : {
-                {
-                    "ID" : "string"
-                }
-            },
-            "Media" : {
+            ],
+            
+            "Media" : [
                 {
                     "MediaUrl" : "string"
                 }
-            },
-            "Tags" : {
+            ],
+            "Tags" : [
                 "string"
-            }
+            ]
         }
-    }
-}
+    ]
+};
+
+var new_item = await client.Items.createItem(body);
+console.log(new_item);
 ```
 
 ---
-### Create Listing/Booking
-**POST ``/api/v2/merchants/{merchantID}/items``** is mapped to `createItem(body, merchantId)`
+### Edit Item
+**PUT ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `Items.EditNewItem(body)`
 
-Arguments:
-* `merchantId` - *(Required)* Merchant GUID (string)
-* `body` - Item details (Object)
-
-Documentation and `body` details can be found {here}(https://apiv2.arcadier.com/#b3c71583-e9e5-4afc-8061-2705113bf571).
-
-Fields similar to `Create Item` have the same requirement.
 ```javascript
-body = {
+var body = {
+    "merchantId": "string" //required - the merchat GUID
     "SKU" : "string",
-    "Name" : "string",
-    "BuyerDescription" : "string",
-    "SellerDescription" : "string",
-    "Price" : 0,
-    "PriceUnit" : "string",
-    "StockLimited" : true,
-    "StockQuantity" : 0,
+    "Name" : "string", //required
+    "BuyerDescription" : "string", //required
+    "SellerDescription" : "string", //required
+    "Price" : 0, //required
+    "PriceUnit" : "string", //required
+    "StockLimited" : true, //required
+    "StockQuantity" : 0, //can be ommitted if StockLimited is set to false
     "IsVisibleToCustomer" : true,
     "Active" : true,
     "IsAvailable" : true,
-    "CurrencyCode" : "string",
-    "InstantBuy" : true,
-    "Negotiation" : false,
-    "Categories" : {
+    "CurrencyCode" : "string", //required
+    "Categories" : [
         {
-            "ID" : "string"
+            "ID" : "string" //Category GUID. Required
         }
-    },
-    "ShippingMethods" : {
+    ],
+    "ShippingMethods" : [
         {
-            "ID" : "string"
+            "ID" : "string" //Shipping method GUID
         }
-    },
-    "PickupAddresses" : {
+    ],
+    
+    "Media" : [
         {
-            "ID" : "string"
+            "MediaUrl" : "string" //URL of image. Required
         }
-    },
-    "Media" : {
-        {
-            "MediaUrl" : "string"
-        }
-    },
-    "Tags" : {
+    ],
+    "Tags" : [
         "string"
-    },
-    "CustomFields" : {
+    ],
+    "CustomFields" : [
         {
-            "Code" : "string",
-            "Values" : {
+            "Code" : "string", //Custom field code
+            "Values" : [
                 "string"
-            }
+            ]
         }
-    },
-    "Scheduler" : {
-        "TimeZoneOffset" : -12.00,
-        "TimeZoneID" : 1,
-        "AllDay" : false,
-        "Overnight" : false,
-        "StartDateTime" : 1584748800,
-        "EndDateTime" : 1587427200,
-        "OpeningHours" : {
-        	{
-        		"Day" : 1,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "21:00:00",
-        		"IsRestDay" : false
-        	},
-        	{
-        		"Day" : 2,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "21:00:00",
-        		"IsRestDay" : false
-        	},
-        	{
-        		"Day" : 3,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "21:00:00",
-        		"IsRestDay" : false
-        	},
-        	{
-        		"Day" : 4,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "21:00:00",
-        		"IsRestDay" : false
-        	},
-        	{
-        		"Day" : 5,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "21:00:00",
-        		"IsRestDay" : true
-        	},
-        	{
-        		"Day" : 6,
-        		"StartTime" : "18:00:00",
-        		"EndTime" : "23:00:00",
-        		"IsRestDay" : true
-        	},
-        	{
-        		"Day" : 7,
-        		"StartTime" : "08:00:00",
-        		"EndTime" : "22:00:00",
-        		"IsRestDay" : true
-        	}
-        },
-        "Unavailables" : {
-        	{
-        		"StartDateTime" : 1585094400,
-        		"EndDateTime" : 1585180800,
-        		"Reason" : "My Birthday",
-        		"Active" : true
-        	},
-        	{
-        		"StartDateTime" : 1587081600,
-        		"EndDateTime" : 1587222000,
-        		"Reason" : "Your Birthday",
-        		"Active" : true
-        	}
-        }
-    },
-    "HasChildItems" : true,
-    "ChildItems" : {
+    ],
+    "HasChildItems" : false,
+    "ChildItems" : [ //this whole object can be omitted if HasChildItems is set to false
         {
-            "Variants" : {
+            "Variants" : [
                 {
                     "Name" : "string",
                     "GroupName" : "string2"
                 }
-            },
+            ],
             "SKU" : "string",
             "Name" : "string",
             "BuyerDescription" : "string",
@@ -388,94 +302,53 @@ body = {
             "Active" : true,
             "IsAvailable" : true,
             "CurrencyCode" : "string",
-            "Categories" : {
+            "Categories" : [
                 {
                     "ID" : "string"
                 }
-            },
-            "ShippingMethods" : {
+            ],
+            "ShippingMethods" : [
                 {
                     "ID" : "string"
                 }
-            },
-            "PickupAddresses" : {
-                {
-                    "ID" : "string"
-                }
-            },
-            "Media" : {
+            ],
+            
+            "Media" : [
                 {
                     "MediaUrl" : "string"
                 }
-            },
-            "Tags" : {
+            ],
+            "Tags" : [
                 "string"
-            }
+            ]
         }
-    }
-}
+    ]
+};
+
+var edit_item = await client.Items.EditNewItem(body);
+console.log(edit_item);
 ```
-
----
-### Edit Item/Listing/Booking
-**PUT ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `editItem(body, merchantId, itemId)`
-
-Arguments:
-* `merchantId` - *(Required)* Merchant GUID (string)
-* `itemId` - *(Required)* Item GUID (string)
-* `body` - Item details (Object)
 
 Documentation and `body` details can be found {here}(https://apiv2.arcadier.com/#8af9bf27-a3fb-4623-b8d0-f53a67697c47).
 
 ---
 ### Delete Item/Listing/Booking
-**DELETE ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `deleteItem(merchantId, itemId)`
-
-Arguments:
-* `merchantId` - *(Required)* Merchant GUID (string)
-* `itemId` - *(Required)* Item GUID (string)
-
----
-### Tag Item/Listing/Booking
-**POST ``/api/v2/merchants/{merchantID}/items/{itemID}/tags``** is mapped to `tagItem(body, merchantId, itemId)`
-
-Arguments:
-* `merchantId` - *(Required)* Merchant GUID (string)
-* `itemId` - *(Required)* Item GUID (string)
-* `body` - Item details (Array of strings)
+**DELETE ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `Items.deleteItem(body)`
 
 ```javascript
-body = {
-    "string",
-    "string"
+var body = {
+    "merchantId": "string" //merchantGUID
+    "itemId": "string" //itemGUID
 };
-```
 
----
-### Get Item Tags
-**GET ``/api/v2/tags``** is mapped to `getItemTags(pageSize = null, pageNumber = null)`
-
-Arguments:
-* `pageSize` - *(Optional)* The number of results in one response. (integer)
-* `pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
-
-More about pagination {here}(https://apiv2.arcadier.com/#pagination)
-
----
-### Delete Item Tags
-**DELETE ``/api/v2/tags``** is mapped to `deleteTags(body)`
-
-```javascript
-body = {
-    "string_1",
-    "string_2"
-};
+var delete_item = await client.Items.deleteItem(body);
+console.log(delete_item);
 ```
 
 ---
 
 ## Cart
-### Get Buyer"s Cart
+### Get Buyer's Cart
 **GET ``/api/v2/users/{buyerID}/carts``**
 
 ```javascript
