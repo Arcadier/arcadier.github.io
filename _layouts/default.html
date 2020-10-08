@@ -5,36 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{ "/assets/css/bootstrap.css?v=" | append: site.github.build_revision | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/newStyle.css?v=" | append: site.github.build_revision | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/minibar.min.css?v=" | append: site.github.build_revision | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/styles/vs2015.css" }}">
-    <script src="{{ "/assets/js/highlight.pack.js" }}"></script>
+
+    <!-- <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}"> -->
+    <link rel="stylesheet" href="{{ "/assets/css/bootstrap.css" }}">
+    <link rel="stylesheet" href="{{ "/assets/css/newStyle.css" }}">
+    <link rel="stylesheet" href="{{ "/assets/css/minibar.min.css?" }}">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ "/assets/css/styles/vs2015.css">
+    <script src="{{ "/assets/js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="shortcut icon" type="image/x-icon" href="https://api.arcadier.com/assets/images/favicon/favicon-16x16.png">
-    <script src="{{ "/assets/js/jQuery.js" }}"></script>
-    <script src="{{ "/assets/js/scale.fix.js" }}"></script>
-    <!-- <script src="../assets/js/scale.fix.js"></script> -->
-    <script src="{{ "/assets/js/bootstrap.min.js" }}"></script>
-    <script src="{{ "/assets/js/minibar.min.js" }}"></script>
-    <script src="{{ "/assets/js/changelog.js" }}"></script>
-  <script>
-    new MiniBar('.sidebar  .inner' , {
-      scrollX: true,
-      scrollY: true,
-    });
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', '{{ site.google_analytics }}', 'auto');
-    ga('send', 'pageview');
-    $(document).ready(function(){
-    	$('body').on('click' , '.side-opener' , function(){
-    			$(".sidebar").toggleClass('active');
-    	});
-    });
-  </script>
   </head>
   <body class="page-welcome  welcome-body">
     <div class="main-wrapper">
@@ -45,13 +26,13 @@
           <div class="col-md-2 col-sm-2">
           	
             <div class="mobile side-togller ">
-                <a class="side-opener toggle-menu" href="javascript:;">  <img src="{{ "/assets/img/nav.png" }}"></a>
+                <a class="side-opener toggle-menu" href="javascript:;">  <img src="{{ "/assets/img/nav.png"  }}"></a>
             </div>
             <div class="arc_logo pull-left">
               <a href="https://www.arcadier.com/"><img src="{{ "/assets/img/arc.svg" }}" alt="Logo"></a>					
             </div>
             <div class="mobile menu-togller pull-left">
-                <a class="opener toggle-menu" href="javascript:;"> <img src="{{ "/assets/img/arrow.png" }}"></a>
+                <a class="opener toggle-menu" href="javascript:;"> <img src="{{ "/assets/img/arrow.png"  }}"></a>
             </div>
           </div>
           <div class="col-md-10 col-sm-10">
@@ -66,7 +47,7 @@
                               
                 <li><a href="https://github.com/Arcadier/Developer-Community-Support/issues" target="_blank">Visit Issue Tracker</a></li>
                 <li class="desktop"><div class="postman-run-button" data-postman-action="collection/import" data-postman-var-1="346b915f84ec00600260"></div></li>                           
-                <li class="view"><a href="https://apiv2.arcadier.com/" class="postmane-sec-link" target="_blank" rel="noopener">Go to Postman <img src="{{ "/assets/img/postman.svg" }}"></a></li>
+                <li class="view"><a href="https://apiv2.arcadier.com/" class="postmane-sec-link" target="_blank" rel="noopener">Go to Postman <img src="{{ "/assets/img/postman.svg"  }}"></a></li>
               </ul>
             </div>
           </div>
@@ -81,7 +62,7 @@
                 <li><a href="https://github.com/Arcadier/Developer-Community-Support/issues" target="_blank">Visit Issue Tracker</a></li>
               <li class="desktop clearfix">
                 <div class="postman-run-button" data-postman-action="collection/import" data-postman-var-1="346b915f84ec00600260"></div>
-                <div class="view"><a href="https://apiv2.arcadier.com/" class="postmane-sec-link" target="_blank" rel="noopener">Go to Postman <img src="{{ "/assets/img/postman.svg" }}"></a></div>
+                <div class="view"><a href="https://apiv2.arcadier.com/" class="postmane-sec-link" target="_blank" rel="noopener">Go to Postman <img src="{{ "/assets/img/postman.svg"  }}"></a></div>
               </li>                           
             </ul> 
           </div> 
@@ -97,13 +78,6 @@
             <ul>
               <li class="active"><a href="#">Table of Contents</a></li>
               <li><a href="#">Initialising</a></li>
-              <li><a href="#authentication-and-sso">Authentication and SSO</a>
-                <ul class="sub-nav">
-                  <li><a href="##single-sign-on">Single Sign On</a></li>
-                  <li><a href="#log-inget-admin-token">Log In/Get Admin Token</a></li>
-                  <li><a href="#log-out">Log Out</a></li>
-                </ul>
-              </li>
               <li><a href="#user-accounts">User Accounts</a>
                 <ul class="sub-nav">
                   <li><a href="#get-a-users-details">Get A User’s details</a></li>
@@ -128,7 +102,8 @@
               </li>
               <li><a href="#items">Items</a>
                 <ul class="sub-nav">
-                    <li><a href="#get-item-information">Get Item Information</a></li>
+                    <li><a href="#">Get Item Information</a>
+                    </li>
                 </ul>
               </li>
               <li><a href="#cart">Cart</a></li>
@@ -151,11 +126,34 @@
       </div>
       <div class="left-section">
         <div class="content-inner">
-          {{ content }}
+          {{content}}
         </div>
       </div>
     </div>   
       
   </div>
+  <script src="{{ "/assets/js/jQuery.js" }}"></script>
+  <script src="{{ "/assets/js/scale.fix.js" }}"></script>
+  <script src="{{ "/assets/js/scale.fix.js" }}"></script>
+  <script src="{{ "/assets/js/bootstrap.min.js" }}"></script>
+  <script src="{{ "/assets/js/minibar.min.js" }}"></script>
+  <script src="{{ "/assets/js/changelog.js" }}"></script>
+  <script>
+    new MiniBar('.sidebar  .inner' , {
+      scrollX: true,
+      scrollY: true,
+    });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', '{{ site.google_analytics }}', 'auto');
+    ga('send', 'pageview');
+    $(document).ready(function(){
+    	$('body').on('click' , '.side-opener' , function(){
+    			$(".sidebar").toggleClass('active');
+    	});
+    });
+  </script>
   </body>
 </html>
