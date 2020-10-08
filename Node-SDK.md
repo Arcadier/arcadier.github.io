@@ -35,7 +35,7 @@ const config = require("./config.js"); //loads the config to autenticate usage o
 **GET ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `Addresses.getUserAddresses(userId)`
 
 ```javascript
-var addresses = await client.Addresses.getUserAddresses(userId);
+var addresses = await  client. client.Addresses.getUserAddresses(userId);
 console.log(addresses);
 ```
 
@@ -67,7 +67,7 @@ var body = {
     "Country": "string", //required
     "CountryCode": "string" //required
 };
-var newAddress = await client.Addresses.createAddress(userId, body);
+var newAddress = await  client. client.Addresses.createAddress(userId, body);
 console.log(newAddress);
 ```
 
@@ -127,7 +127,7 @@ Arguments:
 * `pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ```javascript
-item_list = sdk->getAllItems();
+item_list = await  client. getAllItems();
 echo item_list{"Records"}; //The actual array of items is in the "Records" field of the JSON response
 ```
 
@@ -160,7 +160,7 @@ body = {
 	"updatedEndDate" : "unix_time"
 };
 
-response = sdk->getAllItemsJsonFiltering(body);
+response = await  client. getAllItemsJsonFiltering(body);
 results = response{"Records"}; //The actual array of matching items is in the "Records" field of the JSON response
 ```
 
@@ -503,7 +503,7 @@ body = {
 **GET ``/api/v2/users/{buyerID}/carts``**
 
 ```javascript
-cart = sdk->getCart(buyerId);
+cart = await  client. getCart(buyerId);
 echo cart{"Records"};
 ```
 Arguments:
@@ -529,7 +529,7 @@ body = {
     }
 };
 
-cart = sdk->addToCart(body, buyerId);
+cart = await  client. addToCart(body, buyerId);
 echo cart;
 ```
 
@@ -554,7 +554,7 @@ body = {
     }
 };
 
-cart = sdk->updateCartItem(body, buyerId, cartItemId);
+cart = await  client. updateCartItem(body, buyerId, cartItemId);
 echo cart;
 ```
 
@@ -567,7 +567,7 @@ Arguments:
 * `cartItemId` - *(Required)* The Cart Item ID obtained from the response of **Add item to Cart** API
 
 ```javascript
-cart = sdk->deleteCartItem(buyerId, cartItemId);
+cart = await  client. deleteCartItem(buyerId, cartItemId);
 echo cart;
 ```
 
@@ -578,7 +578,7 @@ echo cart;
 **GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
 
 ```javascript
-orderInfo = sdk->getOrder(id, userId);
+orderInfo = await  client. getOrder(id, userId);
 echo orderInfo;
 ```
 Arguments:
@@ -591,7 +591,7 @@ Arguments:
 **GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
 
 ```javascript
-orderList = sdk->getOrderHistory(merchantId, pageSize, pageNumber);
+orderList = await  client. getOrderHistory(merchantId, pageSize, pageNumber);
 echo orderList;
 ```
 Arguments:
@@ -605,7 +605,7 @@ Arguments:
 **GET ``/api/v2/merchants/{merchantID}/transactions/{invoiceID}``**
 
 ```javascript
-orderList = sdk->getOrderInfoByInvoiceId(merchantId, invoiceId);
+orderList = await  client. getOrderInfoByInvoiceId(merchantId, invoiceId);
 echo orderList;
 ```
 Arguments:
@@ -639,7 +639,7 @@ body = {
     }
 };
 
-updated_order = sdk->editOrder(merchantId, orderId, body)
+updated_order = await  client. editOrder(merchantId, orderId, body)
 echo updated_order;
 ```
 
@@ -698,7 +698,7 @@ body = {
     }
 };
 
-updated_orders = sdk->updateOrders(body)
+updated_orders = await  client. updateOrders(body)
 echo updated_orders;
 ```
 
@@ -712,7 +712,7 @@ Field Definitions for `body` can be found {here}(https://apiv2.arcadier.com/#029
 **GET ``/api/v2/admins/{adminID}/transactions/{invoiceID}``**
 
 ```javascript
-transac_info = sdk->getTransactionInfo(invoiceNo);
+transac_info = await  client. getTransactionInfo(invoiceNo);
 echo transac_info;
 ```
 Arguments:
@@ -724,7 +724,7 @@ Arguments:
 **GET ``/api/v2/admins/{adminID}/transactions``**
 
 ```javascript
-transactions = sdk->getAllTransactions(startDate = null, endDate = null, pageSize = null, pageNumber = null);
+transactions = await  client. getAllTransactions(startDate = null, endDate = null, pageSize = null, pageNumber = null);
 echo transactions{"Records"};
 ```
 
@@ -740,7 +740,7 @@ Arguments:
 **GET ``/api/v2/users/{buyerID}/transactions``**
 
 ```javascript
-transactions = sdk->getBuyerTransactions(buyerId);
+transactions = await  client. getBuyerTransactions(buyerId);
 echo transactions{"Records"};
 ```
 Arguments:
@@ -782,7 +782,7 @@ body = {
   }
 };
 
-updated_transaction = sdk->updateTransaction(invoiceNo, body);
+updated_transaction = await  client. updateTransaction(invoiceNo, body);
 echo updated_transaction;
 ```
 
@@ -801,7 +801,7 @@ Field Definitions for `body` can be found {here}(https://apiv2.arcadier.com/#68a
 **GET ``api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/``**
 
 ```javascript
-custom_table = sdk->getCustomTable(packageId, tableName);
+custom_table = await  client. getCustomTable(packageId, tableName);
 echo custom_table{"Records"};
 ```
 
@@ -820,7 +820,7 @@ body = {
     `{column-name2}` : 0
 };
 
-new_row = sdk->createRowEntry(packageId, tableName, body);
+new_row = await  client. createRowEntry(packageId, tableName, body);
 echo new_row;
 ```
 Arguments:
@@ -838,7 +838,7 @@ body = {
     "{column-name2}": 0
 };
 
-updated_row = sdk->editRowEntry(packageId, tableName, rowId, body);
+updated_row = await  client. editRowEntry(packageId, tableName, rowId, body);
 echo update_row;
 ```
 Arguments:
@@ -852,7 +852,7 @@ Arguments:
 **DELETE ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``**
 
 ```javascript
-deleted_row = sdk->deleteRowEntry(packageId, tableName, rowId);
+deleted_row = await  client. deleteRowEntry(packageId, tableName, rowId);
 echo deleted_row;
 ```
 Arguments:
@@ -867,7 +867,7 @@ Arguments:
 **GET ``/api/v2/event-triggers/``**
 
 ```javascript
-event_trigger_list = sdk->getEventTriggers();
+event_trigger_list = await  client. getEventTriggers();
 echo event_trigger_list;
 ```
 
@@ -892,7 +892,7 @@ body = {
     }
 };
 
-new_event_trigger = sdk->addEventTrigger(body);
+new_event_trigger = await  client. addEventTrigger(body);
 echo new_event_trigger;
 ```
 
@@ -922,7 +922,7 @@ body = {
     }
 };
 
-edit_event_trigger = sdk->updateEventTrigger(eventTriggerId, body);
+edit_event_trigger = await  client. updateEventTrigger(eventTriggerId, body);
 echo edit_event_trigger;
 ```
 Arguments:
@@ -942,7 +942,7 @@ Field definitions:
 **DELETE ``/api/v2/event-triggers/{event_trigger_ID}``**
 
 ```javascript
-delete_event_trigger = sdk->removeEventTrigger(eventTriggerId);
+delete_event_trigger = await  client. removeEventTrigger(eventTriggerId);
 echo delete_event_trigger;
 ```
 Arguments:
@@ -962,7 +962,7 @@ body= {
     "Subject" : "string"
 };
 
-sendEmail = sdk->sendEmail(from, to, html, subject);
+sendEmail = await  client. sendEmail(from, to, html, subject);
 echo sendEmail;
 ```
 
@@ -978,7 +978,7 @@ Argurments:
 **POST ``/api/v2/emails``**
 
 ```javascript
-sendEmail = sdk->sendEmailAfterGeneratingInvoice(invoiceNo);
+sendEmail = await  client. sendEmailAfterGeneratingInvoice(invoiceNo);
 echo sendEmail;
 ``` 
 
@@ -991,7 +991,7 @@ Arguments:
 ### Get Fulfilment Statuses
 **GET ``/api/v2/static/fulfilment-statuses``**
 ```javascript
-fulfilment_statuses = sdk->getFulfilmentStatuses();
+fulfilment_statuses = await  client. getFulfilmentStatuses();
 echo fulfilment_statuses{"Records"};
 ```
 
@@ -1000,7 +1000,7 @@ echo fulfilment_statuses{"Records"};
 ### Get Currencies
 **GET ``/api/v2/static/currencies``**
 ```javascript
-currencies = sdk->getCurrencies();
+currencies = await  client. getCurrencies();
 echo currencies{"Records"};
 ```
 
@@ -1009,7 +1009,7 @@ echo currencies{"Records"};
 ### Get Countries
 **GET ``/api/v2/static/countries``**
 ```javascript
-countries = sdk->getCountries();
+countries = await  client. getCountries();
 echo countries{"Records"};
 ```
 
@@ -1018,7 +1018,7 @@ echo countries{"Records"};
 ### Get Order Statuses
 **GET ``/api/v2/static/order-statuses``**
 ```javascript
-order_statuses = sdk->getOrderStatuses();
+order_statuses = await  client. getOrderStatuses();
 echo order_statuses{"Records"};
 ```
 
@@ -1027,7 +1027,7 @@ echo order_statuses{"Records"};
 ### Get Payment Statuses
 **GET ``/api/v2/static/payment-statuses``**
 ```javascript
-payment_statuses = sdk->getPaymentStatuses();
+payment_statuses = await  client. getPaymentStatuses();
 echo payment_statuses{"Records"};
 ```
 
@@ -1036,7 +1036,7 @@ echo payment_statuses{"Records"};
 ### Get TimeZones
 **GET ``/api/v2/static/timezones``**
 ```javascript
-timezones = sdk->getTimezones();
+timezones = await  client. getTimezones();
 echo timezones{"Records"};
 ```
 
@@ -1047,7 +1047,7 @@ echo timezones{"Records"};
 **GET ``/api/v2/categories``**
 
 ```javascript
-category_list = sdk->getCategories(pageSize = null, pageNumber = null);
+category_list = await  client. getCategories(pageSize = null, pageNumber = null);
 echo category_list{"Records"};
 ```
 
@@ -1061,7 +1061,7 @@ Arguments:
 **GET ``/api/v2/categories/hierarchy``**
 
 ```javascript
-category_hierarchy = sdk->getCategoriesWithHierarchy();
+category_hierarchy = await  client. getCategoriesWithHierarchy();
 echo category_hierarchy;
 ```
 
@@ -1084,7 +1084,7 @@ body = {
     "Level" : 0
 };
 
-new_category = sdk->createCategory(body);
+new_category = await  client. createCategory(body);
 echo new_category;
 ```
 
@@ -1115,7 +1115,7 @@ body = {
     "Level" : 0
 };
 
-edited_category = sdk->updateCategory(categoryId, body);
+edited_category = await  client. updateCategory(categoryId, body);
 echo edited_category;
 ```
 
@@ -1143,7 +1143,7 @@ body = {
     "Category GUID #3"
 };
 
-sorted_list = sdk->sortCategories(body);
+sorted_list = await  client. sortCategories(body);
 echo sorted_list;
 ```
 
@@ -1152,7 +1152,7 @@ echo sorted_list;
 ### Delete a Category
 **DELETE ``/api/v2/admins/{adminID}/categories/{categoryID}``**
 ```javascript
-deleted_category = sdk->deleteCategory(categoryId);
+deleted_category = await  client. deleteCategory(categoryId);
 echo deleted_category;
 ```
 
@@ -1166,7 +1166,7 @@ Arguments:
 **GET ``/api/v2/marketplaces/``**
 
 ```javascript
-mp = sdk->getMarketplaceInfo();
+mp = await  client. getMarketplaceInfo();
 echo mp;
 ```
 
@@ -1187,7 +1187,7 @@ body = {
     }
 };
 
-updated_mp = sdk->updateMarketplaceInfo(body);
+updated_mp = await  client. updateMarketplaceInfo(body);
 echo updated_mp;
 ```
 
@@ -1200,7 +1200,7 @@ body = {
     "Value" : "string"
 };
 
-res = sdk->customiseURL(body)
+res = await  client. customiseURL(body)
 echo res;
 ```
 
@@ -1215,7 +1215,7 @@ Field Definitions:
 **GET ``/api/v2/merchants/{merchantID}/shipping-methods/``**
 
 ```javascript
-shipping_methods = sdk->getShippingMethods(merchantId);
+shipping_methods = await  client. getShippingMethods(merchantId);
 echo shipping_methods;
 ```
 
@@ -1223,7 +1223,7 @@ echo shipping_methods;
 **GET ``/api/v2/merchants/{adminID}/shipping-methods/``**
 
 ```javascript
-delivery_rates = sdk->getDeliveryRates();
+delivery_rates = await  client. getDeliveryRates();
 echo delivery_rates;
 
 ```
@@ -1239,7 +1239,7 @@ body = {
 	"CurrencyCode" : "string", //required
 	"Description" : "string"
 };
-new_shipping = sdk->createShippingMethod(merchantId, body);
+new_shipping = await  client. createShippingMethod(merchantId, body);
 echo new_shipping;
 ```
 
@@ -1266,7 +1266,7 @@ body = {
 	"CurrencyCode" : "string", //required
 	"Description" : "string"
 };
-edited_shipping = sdk->updateShippingMethod(merchantId, shippingMethodId, body)
+edited_shipping = await  client. updateShippingMethod(merchantId, shippingMethodId, body)
 echo edited_shipping;
 ```
 
@@ -1287,7 +1287,7 @@ Field Definitions:
 **DELETE ``/api/v2/merchants/{merchantID}/shipping-methods/{shippingmethodID}``**
 
 ```javascript
-deleted_shipping = sdk->deleteShippingMethod(merchantId, shippingMethodId);
+deleted_shipping = await  client. deleteShippingMethod(merchantId, shippingMethodId);
 echo deleted_shipping;
 ```
 
@@ -1302,7 +1302,7 @@ Arguments:
 **GET ``/api/v2/admins/{adminID}/custom-field-definitions/``**
 
 ```javascript
-cf = sdk->getCustomFields()
+cf = await  client. getCustomFields()
 echo cf{"Records"};
 ```
 
@@ -1312,7 +1312,7 @@ echo cf{"Records"};
 **GET ``/api/v2/packages/{packageID}/custom-field-definitions``**
 
 ```javascript
-plugin_cf = sdk->getPluginCustomFields(packageId);
+plugin_cf = await  client. getPluginCustomFields(packageId);
 echo plugin_cf;
 ```
 
@@ -1345,7 +1345,7 @@ body = {
   }
 };
 
-new_cf = sdk->createCustomField(body);
+new_cf = await  client. createCustomField(body);
 echo new_cf;
 ```
 
@@ -1377,7 +1377,7 @@ body = {
   }
 };
 
-updated_cf = sdk->updateCustomField(code, body)
+updated_cf = await  client. updateCustomField(code, body)
 echo updated_cf;
 ```
 
@@ -1392,7 +1392,7 @@ Field Definitions for `body`: All the field definitions for this request can be 
 **DELETE ``/api/v2/admins/{adminID}/custom-field-definitions/{custom-field-code}``**
 
 ```javascript
-deleted_cf = sdk->deleteCustomField(code);
+deleted_cf = await  client. deleteCustomField(code);
 echo deleted_cf;
 ```
 
@@ -1412,7 +1412,7 @@ body = {
     "Cart Item ID #3"
 };
 
-generate_details = sdk->generateInvoice(buyerId, body);
+generate_details = await  client. generateInvoice(buyerId, body);
 echo generate_details;
 ```
 
