@@ -33,7 +33,7 @@ const config = require("./config.js"); //loads the config to autenticate usage o
 **GET ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `Addresses.getUserAddresses(userId)`
 
 ```javascript
-var addresses = await  client. client.Addresses.getUserAddresses(userId);
+var addresses = await client. client.Addresses.getUserAddresses(userId);
 console.log(addresses);
 ```
 
@@ -63,7 +63,7 @@ var body = {
     "CountryCode": "string" //required
 };
 
-var newAddress = await  client.Addresses.createAddress(userId, body);
+var newAddress = await client.Addresses.createAddress(userId, body);
 console.log(newAddress);
 ```
 
@@ -106,7 +106,7 @@ Arguments:
 **GET** **```/api/v2/items```** is mapped to `Items.getAllItems(pageSize, pageNumber)`
 
 ```javascript
-var item_list = await  client.Items.getAllItems(pageSize, pageNumber);
+var item_list = await client.Items.getAllItems(pageSize, pageNumber);
 console.log(item_list);
 ```
 
@@ -136,7 +136,7 @@ var body = {
     "updatedEndDate" : "unix_time"
 };
 
-var response = await  client.Items.searchItems(body);
+var response = await client.Items.searchItems(body);
 console.log(response) //The actual array of matching items is in the "Records" field of the JSON response
 ```
 
@@ -332,7 +332,7 @@ console.log(edit_item);
 Documentation and `body` details can be found {here}(https://apiv2.arcadier.com/#8af9bf27-a3fb-4623-b8d0-f53a67697c47).
 
 ---
-### Delete Item/Listing/Booking
+### Delete Item
 **DELETE ``/api/v2/merchants/{merchantID}/items/{itemID}``** is mapped to `Items.deleteItem(body)`
 
 ```javascript
@@ -349,455 +349,212 @@ console.log(delete_item);
 
 ## Cart
 ### Get Buyer's Cart
-**GET ``/api/v2/users/{buyerID}/carts``**
+**GET ``/api/v2/users/{buyerID}/carts``** is mapped to ```Carts.getCarts(body)```
 
 ```javascript
-cart = await  client. getCart(buyerId);
-echo cart{"Records"};
+var body = {
+    "userId": "string", //user GUID
+    "pageSize": 0,
+    "pageNumber": 0
+};
+
+var cart = await client.Carts.getCarts(body);
+console.log(cart);
 ```
-Arguments:
-* `buyerId` - *(Required)* The buyer"s GUID (string)
 
 ---
 
 ### Add Item to Cart
-**POST ``/api/v2/users/{buyerID}/carts``**
+**POST ``/api/v2/users/{buyerID}/carts``** is mapped to ```Carts.addItem(body)```
 
-Arguments:
-* `buyerId` - *(Required)* The buyer"s GUID (string)
-* `body`:
 ```javascript
-body = {
-    "ItemDetail": {
-        "ID": "00000000-0000-0000-0000-000000000000" // Required. String. Item GUID. If an item has child items, this will be the child item GUID.
-    },
-    "Quantity": 0, //integer. Required
-    "CartItemType": "delivery", //optional
-    "ShippingMethod": {
-        "ID": "00000000-0000-0000-0000-000000000000" //optional. Shipping Method GUID 
-    }
+var body = {
+    "userId": "string", //user GUID
+    "itemId": "string", //item GUID
+    "quantity": 0, //amount of the item to add to cart
+    "discount": 0 //discount amount to apply to the total of the cart
 };
 
-cart = await  client. addToCart(body, buyerId);
-echo cart;
+var cart = await client.Carts.addItem(body);
+console.log(cart);
 ```
 
 ---
 
 ### Edit Item in Cart
-**PUT ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``**
+**PUT ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``** is mapped to ```Carts.editCart(body)```
 
-Arguments:
-* `buyerId` - *(Required)* The buyer"s GUID (string)"=
-* `cartItemId` - *(Required)* The Cart Item ID obtained from the response of **Add item to Cart** API
-* `body`:
 ```javascript
 body = {
-    "ItemDetail": {
-        "ID": "00000000-0000-0000-0000-000000000000" // Required. String. Item GUID. If an item has child items, this will be the child item GUID.
-    },
-    "Quantity": 0, //integer. Required
-    "CartItemType": "delivery", //optional
-    "ShippingMethod": {
-        "ID": "00000000-0000-0000-0000-000000000000" //optional. Shipping Method GUID 
-    }
+    "itemID": "string", //item GUID
+    "userID": "string", //userGUID
+    "cartID": "string", //cart itemID
+    "quantity": 0,
+    "discount": 0,
+    "cartItemType": "delivery",
+    "shippingMethodId": "string"
 };
 
-cart = await  client. updateCartItem(body, buyerId, cartItemId);
-echo cart;
+var edited_cart = await client.Carts.editCart(body);
+console.log(edited_cart);
 ```
 
 ---
 ### Delete Item from Cart
-**DELETE ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``**
+**DELETE ``/api/v2/users/{buyerID}/carts/{cart-item-ID}``** is mapped to ```Carts.deleteItem(body)```
 
-Arguments:
-* `buyerId` - *(Required)* The buyer"s GUID (string)"=
-* `cartItemId` - *(Required)* The Cart Item ID obtained from the response of **Add item to Cart** API
 
 ```javascript
-cart = await  client. deleteCartItem(buyerId, cartItemId);
-echo cart;
+var body = {
+    "userId": "string", //user GUID
+    "cartId": "string" //cart item GUID
+};
+
+var delete_cart_item = await client.Carts.deleteItem(body);
+console.log(delete_cart_item);
 ```
 
 ---
 
 ## Orders
 ### Get Order by Order GUID
-**GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
+**GET ``/api/v2/users/{merchantID}/orders/{orderID}``** is mapped to ```Orders.getOrderDetails```
 
 ```javascript
-orderInfo = await  client. getOrder(id, userId);
-echo orderInfo;
+var body = {
+    "userId": "string" //user GUID
+    "orderId": "string" //order GUID
+};
+
+var orderInfo = await client.Orders.getOrderDetails(body);
+console.log(orderInfo);
 ```
-Arguments:
-* `id` - *(Required)* The order GUID (string)
-* `userId` - *(Required)* Can be either the Admin GUID or the merchant GUID of the the merchant who owns the order.
 
 ---
 
 ### Get All Orders of a merchant
-**GET ``/api/v2/users/{merchantID}/orders/{orderID}``**
+**GET ``/api/v2/merchants/{merchantID}/transactions``** is mapped to ```Orders.getHistory(body)```
 
 ```javascript
-orderList = await  client. getOrderHistory(merchantId, pageSize, pageNumber);
-echo orderList;
+var body = {
+    "userId": "string" //user GUID
+    "keyword": "string" //keyword to search within the order
+    "pageSize": 0,
+    "pageNumber": 0,
+    "orderStatus": "string" //the order's status
+    "supplier": "string" //merchant ID of the orders
+    "startDate": 0,
+    "endDate": 0
+};
+
+var orderList = await client.Orders.getHistory(body);
+console.log(orderList);
 ```
-Arguments:
-* `merchantId` - *(Required)* The merchant GUID (string)
-* `pageSize` - *(Optional)* The number of results in one response. (integer)
-* `pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
 ---
 
 ### Get All Orders within an Invoice
-**GET ``/api/v2/merchants/{merchantID}/transactions/{invoiceID}``**
+**GET ``/api/v2/merchants/{merchantID}/transactions/{invoiceID}``** is mapped to ```Orders.getHistoryDetail```
 
 ```javascript
-orderList = await  client. getOrderInfoByInvoiceId(merchantId, invoiceId);
-echo orderList;
-```
-Arguments:
-* `merchantId` - *(Required)* The merchant GUID (string)
-* `invoiceId` - *(Required)* The invoice number (string)
-
----
-
-### Update An Order
-**POST ``/api/v2/merchants/{merchantID}/orders/{orderID}``**
-
-```javascript
-body = {
-    "FulfilmentStatus": "string",
-    "PaymentStatus": "string",
-    "Balance": 0,
-    "DeliveryToAddress": {
-        "ID": "00000000-0000-0000-0000-000000000000"
-    },
-    "CartItemType": "string",
-    "Freight": 0,
-    "DiscountAmount": 0,
-    "Surcharge": 0,
-    "CustomFields": {
-        {
-            "Code": "string",
-            "Values": {
-            	"string"
-            }
-        }
-    }
+var body = {
+    "merchantId": "string" //merchant GUID
+    "invoiceNo": "string" //invoice number
 };
 
-updated_order = await  client. editOrder(merchantId, orderId, body)
-echo updated_order;
+var orderList = await client.Orders.getHistoryDetail(body);
+console.log(orderList);
 ```
-
-Arguments:
-* `merchantId` - the GUID of the merchant who is the owner of the order. This can also be the Admin GUID (string)
-* `orderId` - The order GUID (string)
-* `body`
-
-Field Definitions for `body` can be found {here}(https://apiv2.arcadier.com/#5b14eb44-8967-480e-82ea-166378754b2b).
-
-### Edit Several Orders" Details
-**POST ``/api/v2/admins/{adminID}/orders``**
-```javascript
-body = {
-    { //order #1
-        "ID" : "00000000-0000-0000-0000-000000000000",
-        "FulfilmentStatus": "string",
-        "PaymentStatus": "string",
-        "Balance": 0,
-        "DeliveryToAddress": {
-            "ID": "00000000-0000-0000-0000-000000000000"
-        },
-        "CartItemType": "string",
-        "Freight": 0,
-        "DiscountAmount": 0,
-        "Surcharge": 0,
-        "CustomFields": {
-            {
-                "Code": "string",
-                "Values": {
-                    "string"
-                }
-            }
-        }
-    },
-    { //order #2
-        "ID" : "00000000-0000-0000-0000-000000000000",
-        "FulfilmentStatus": "string",
-        "PaymentStatus": "string",
-        "Balance": 0,
-        "DeliveryToAddress": {
-            "ID": "00000000-0000-0000-0000-000000000000"
-        },
-        "CartItemType": "string",
-        "Freight": 0,
-        "DiscountAmount": 0,
-        "Surcharge": 0,
-        "CustomFields": {
-            {
-                "Code": "string",
-                "Values": {
-                    "string"
-                }
-            }
-        }
-    }
-};
-
-updated_orders = await  client. updateOrders(body)
-echo updated_orders;
-```
-
-Field Definitions for `body` can be found {here}(https://apiv2.arcadier.com/#02990d95-cb5f-4040-9965-a88bcb342c1c).
-
-
 ---
 
 ## Transactions
-### Get Transaction Info by Invoice number
-**GET ``/api/v2/admins/{adminID}/transactions/{invoiceID}``**
-
-```javascript
-transac_info = await  client. getTransactionInfo(invoiceNo);
-echo transac_info;
-```
-Arguments:
-* `invoiceNo` - *(Required)* The invoice number (string)
-
----
-
 ### Get all Transactions of marketplace
-**GET ``/api/v2/admins/{adminID}/transactions``**
+**GET ``/api/v2/admins/{adminID}/transactions``** is mapped to ```Transactions.getTransactions(pageSize, pageNumber, keywords, startDate, endDate)```
 
 ```javascript
-transactions = await  client. getAllTransactions(startDate = null, endDate = null, pageSize = null, pageNumber = null);
-echo transactions{"Records"};
+var transactions = await client.Transactions.getTransactions(pageSize, pageNumber, keywords, startDate, endDate);
+console.log(transactions);
 ```
 
 Arguments:
 * `pageSize` - *(Optional)* The number of results in one response. (integer)
 * `pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
+* `keywords` - *(Optional)* Search term as keyword to find within transactions.
 * `startDate` - *(Optional)* The lower limit of the time at which you want to start filtering. (integer - Unix timestamp)
 * `endDate` - *(Optional)* The upper limit of the time at which you want to end filetering. (integer - Unix timestamp)
 
 ---
 
-### Get all Transactions of a Buyer
-**GET ``/api/v2/users/{buyerID}/transactions``**
-
-```javascript
-transactions = await  client. getBuyerTransactions(buyerId);
-echo transactions{"Records"};
-```
-Arguments:
-* `buyerId` - *(Required)* The buyer GUID (string)
-
----
-
-### Update Array of Transaction"s Details
-**PUT ``/api/v2/admins/{adminID}/invoices/{invoiceID}``**
-
-```javascript
-body = {
-  {
-    "Payee" : {
-      "ID" : "00000000-0000-0000-0000-000000000000"
-    },
-    "Order" : {
-      "ID" : "00000000-0000-0000-0000-000000000000"
-    },
-    "Total" : 0,
-    "Fee" : 0,
-    "Status" : "string",
-    "Refunded" : false,
-    "RefundedRef" : "string",
-    "GatewayPayKey" : "string",
-    "GatewayTransactionID" : "string",
-    "GatewayStatus" : "string",
-    "GatewayTimeStamp" : "string",
-    "GatewayRef" : "string",
-    "GatewayCorrelationId" : "string",
-    "GatewaySenderId" : "string",
-    "GatewaySenderRef" : "string",
-    "GatewayReceiverId" : "string",
-    "GatewayReceiverRef" : "string",
-    "Gateway" : {
-      "Code" : "string"
-    },
-    "DateTimePaid" : 0
-  }
-};
-
-updated_transaction = await  client. updateTransaction(invoiceNo, body);
-echo updated_transaction;
-```
-
-Arguments:
-* `invoiceNo` - the invoice number of the invoice to be updated
-* `body`
-
-Field Definitions for `body` can be found {here}(https://apiv2.arcadier.com/#68a1094c-77b6-45fb-acc2-aec053d94a28).
-
----
-
----
-
 ## Custom Tables
 ### Get Custom Table Contents
-**GET ``api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/``**
+**GET ``api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/``** is mapped to ```CustomTables.getCustomTableContents(body)```
 
 ```javascript
-custom_table = await  client. getCustomTable(packageId, tableName);
-echo custom_table{"Records"};
-```
+var body = {
+    "pluginId": "string", //The Plug-In ID 
+    "tableName": "string" //The table name
+};
 
-Arguments:
-* `packageId` - *(Required)* The Plug-In ID (string)
-* `tableName` - *(Required)* The table name (string)
+var custom_table = await client.CustomTables.getCustomTableContents(body);
+console.log(custom_table);
+```
 
 ---
 
 ### Create Row 
-**POST ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows``**
+**POST ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows``** is mapped to ```CustomTables.createCustomTableRow(body)```
 
 ```javascript
-body = {
-    `{column-name1}` : `string`, // body type depends on what was configured during custom table creation
-    `{column-name2}` : 0
+var body = {
+    "pluginId": "string", //The Plug-In ID 
+    "tableName": "string" //The table name
+    "request": {
+        "column-name-1": "string",
+        "column-name-2": "string"
+    }
 };
 
-new_row = await  client. createRowEntry(packageId, tableName, body);
-echo new_row;
+var new_row = await client.CustomTables.createCustomTableRow(body);
+console.log(new_row);
 ```
-Arguments:
-* `packageId` - *(Required)* The Plug-In ID (string)
-* `tableName` - *(Required)* The table name (string)
 
 ---
 
 ### Update Row 
-**PUT ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``**
+**PUT ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``** is mapped to ```CustomTables.updateCustomTableRow(body)``` 
 
 ```javascript
-body = {
-    "{column-name1}": "string", // body type depends on what was configured during custom table creation
-    "{column-name2}": 0
+var body = {
+    "pluginId": "string", //The Plug-In ID 
+    "tableName": "string", //The table name
+    "rowID": "string",
+    "request": {
+        "column-name-1": "string",
+        "column-name-2": "string"
+    }
 };
 
-updated_row = await  client. editRowEntry(packageId, tableName, rowId, body);
-echo update_row;
+var updated_row = await client.CustomTables.updateCustomTableRow(body);
+console.log(update_row);
 ```
-Arguments:
-* `packageId` - *(Required)* The Plug-In ID (string)
-* `tableName` - *(Required)* The table name (string)
-* `rowId` - *(Required)* The ID of the row (string)
-
 ---
 
 ### Delete Row 
-**DELETE ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``**
+**DELETE ``/api/v2/plugins/{packageID}/custom-tables/{custom-table-name}/rows/{rowId}``** is mapped to ```CustomTables.deleteCustomTableRow(body)```
 
 ```javascript
-deleted_row = await  client. deleteRowEntry(packageId, tableName, rowId);
-echo deleted_row;
-```
-Arguments:
-* `packageId` - *(Required)* The Plug-In ID (string)
-* `tableName` - *(Required)* The table name (string)
-* `rowId` - *(Required)* The ID of the row (string)
-
----
-
-## Event Triggers
-### Get Event Triggers
-**GET ``/api/v2/event-triggers/``**
-
-```javascript
-event_trigger_list = await  client. getEventTriggers();
-echo event_trigger_list;
-```
-
----
-
-### Create Event Trigger
-**POST ``/api/v2/event-triggers/``**
-
-```javascript
-body = {
-    "Uri" : "string",  //required
-    "Filters" : {      //required
-        "string", 
-        "string"
-    },
-    "Description" : "string",
-    "IsPaused" : false,
-    "Headers" : {
-        "Authorization" : "string",
-        "CustomHeader" : "string",
-        "Alice" : "Bob"
-    }
+var body = {
+    "pluginId": "string", //The Plug-In ID 
+    "tableName": "string", //The table name
+    "rowID": "string"
 };
 
-new_event_trigger = await  client. addEventTrigger(body);
-echo new_event_trigger;
+var deleted_row = await client.CustomTables.deleteCustomTableRow(body);
+console.log(deleted_row);
 ```
-
-Field definitions:
-* `"Uri"` - The URL of the webhook to send the payload to.
-* `"Filters" : {}` - Array of names of the events which act as trigger. More details {here}(https://apiv2.arcadier.com/#cda751b9-e7a4-4d50-b660-72ec9cd4d4f0).
-* `"Description"` - Short description of the event trigger
-* `"IsPaused"` - (Boolean) Halts the triggering of this event to the specified URI. This does not delete the event trigger.
-* `"Headers" : {}` - Array of headers paramaters you wish to send with the payload to the webhook server.
-
-### Edit Event Trigger
-**PUT ``/api/v2/event-triggers/{event_trigger_ID}``**
-
-```javascript
-body = {
-    "Uri" : "string",  //required
-    "Filters" : {      //required
-        "string", 
-        "string"
-    },
-    "Description" : "string",
-    "IsPaused" : false,
-    "Headers" : {
-        "Authorization" : "string",
-        "CustomHeader" : "string",
-        "Alice" : "Bob"
-    }
-};
-
-edit_event_trigger = await  client. updateEventTrigger(eventTriggerId, body);
-echo edit_event_trigger;
-```
-Arguments:
-* `eventTriggerId` - the ID of the event trigger obtained after creating it (string)
-* `body`:
-
-Field definitions:
-* `"Uri"` - The URL of the webhook to send the payload to.
-* `"Filters" : {}` - Array of names of the events which act as trigger. More details {here}(https://apiv2.arcadier.com/#cda751b9-e7a4-4d50-b660-72ec9cd4d4f0).
-* `"Description"` - Short description of the event trigger
-* `"IsPaused"` - (Boolean) Halts the triggering of this event to the specified URI. This does not delete the event trigger.
-* `"Headers" : {}` - Array of headers paramaters you wish to send with the payload to the webhook server.
 
 ---
 
-### Delete Event Trigger
-**DELETE ``/api/v2/event-triggers/{event_trigger_ID}``**
-
-```javascript
-delete_event_trigger = await  client. removeEventTrigger(eventTriggerId);
-echo delete_event_trigger;
-```
-Arguments:
-* `eventTriggerId` - the ID of the event trigger obtained after creating it (string)
-
----
 
 ## E-Mail
 ### Send Email
@@ -1012,263 +769,11 @@ Arguments:
 
 ## Marketplace
 ### Get Marketplace Info
-**GET ``/api/v2/marketplaces/``**
+**GET ``/api/v2/marketplaces/``** is mapped to ```Marketplaces.getMarketplaceInfo()```
 
 ```javascript
-mp = await  client. getMarketplaceInfo();
-echo mp;
+var mp = await client.Marketplaces.getMarketplaceInfo();
+console.log(mp);
 ```
-
----
-
-### Update Marketplace Info
-**POST ``/api/v2/marketplaces/``**
-
-```javascript
-body = {
-   "CustomFields" : {
-        {
-            "Code" : "string", //the custom field code of an existing custom field
-            "Values" : {
-                "string" //the value to store. body type depends on what was configured when the custom field was created.
-            }
-        }
-    }
-};
-
-updated_mp = await  client. updateMarketplaceInfo(body);
-echo updated_mp;
-```
-
-### Customize/Shorten URL
-**POST ``/api/v2/rewrite-rules``**
-
-```javascript
-body = {
-    "Key" : "string",
-    "Value" : "string"
-};
-
-res = await  client. customiseURL(body)
-echo res;
-```
-
-Field Definitions:
-* `"Key"` - The custom URL slug
-* `"Value"` - The default URL slug to replace
-
----
-
-## Shipping/Delivery
-### Get Shipping Methods
-**GET ``/api/v2/merchants/{merchantID}/shipping-methods/``**
-
-```javascript
-shipping_methods = await  client. getShippingMethods(merchantId);
-echo shipping_methods;
-```
-
-### Get Delivery Rates (Weight/Price)
-**GET ``/api/v2/merchants/{adminID}/shipping-methods/``**
-
-```javascript
-delivery_rates = await  client. getDeliveryRates();
-echo delivery_rates;
-
-```
-
-### Create Shipping Method/Delivery Rate
-**POST ``/api/v2/merchants/{merchantID}/shipping-methods``**
-
-```javascript
-body = {
-	"Courier" : "string",
-	"Price" : 0, //required
-	"CombinedPrice" : 0, 
-	"CurrencyCode" : "string", //required
-	"Description" : "string"
-};
-new_shipping = await  client. createShippingMethod(merchantId, body);
-echo new_shipping;
-```
-
-Arguments:
-* `merchantId` - The merchant"s GUID (string)
-* `body`
-
-Field Definitions:
-* `"Courier"` - The shipping method name
-* `"Price"` and `"CombinedPrice"` - Detailed explanations of how to use these 2 fields together is explained {here}(https://apiv2.arcadier.com/#4fc81ed1-97b5-45ce-b1e9-51fee0a9916e).
-* `"CurrencyCode"` -  The currency in which the shipping method operates, eg: USD or SGD
-* `"Description"` - Short description of the shipping method.
-
----
-
-### Edit Shipping Method/Delivery Rate
-**PUT ``/api/v2/merchants/{merchantID}/shipping-methods/{shippingmethodID}``**
-
-```javascript
-body = {
-	"Courier" : "string",
-	"Price" : 0, //required
-	"CombinedPrice" : 0, 
-	"CurrencyCode" : "string", //required
-	"Description" : "string"
-};
-edited_shipping = await  client. updateShippingMethod(merchantId, shippingMethodId, body)
-echo edited_shipping;
-```
-
-Arguments:
-* `merchantId` - The merchant"s GUID (string)
-* `shippingMethodId` - The shipping GUID to be edited (string)
-* `body`
-
-Field Definitions:
-* `"Courier"` - The shipping method name
-* `"Price"` and `"CombinedPrice"` - Detailed explanations of how to use these 2 fields together is explained {here}(https://apiv2.arcadier.com/#4fc81ed1-97b5-45ce-b1e9-51fee0a9916e).
-* `"CurrencyCode"` -  The currency in which the shipping method operates, eg: USD or SGD
-* `"Description"` - Short description of the shipping method.
-
----
-
-### Delete Shipping Method/Delivery Rate
-**DELETE ``/api/v2/merchants/{merchantID}/shipping-methods/{shippingmethodID}``**
-
-```javascript
-deleted_shipping = await  client. deleteShippingMethod(merchantId, shippingMethodId);
-echo deleted_shipping;
-```
-
-Arguments:
-* `merchantId` - The merchant"s GUID (string)
-* `shippingMethodId` - The shipping GUID to be deleted (string)
-
----
-
-## Custom Fields
-### Get Custom Field Definitions
-**GET ``/api/v2/admins/{adminID}/custom-field-definitions/``**
-
-```javascript
-cf = await  client. getCustomFields()
-echo cf{"Records"};
-```
-
---- 
-
-### Get Custom Fields of a Plug-In
-**GET ``/api/v2/packages/{packageID}/custom-field-definitions``**
-
-```javascript
-plugin_cf = await  client. getPluginCustomFields(packageId);
-echo plugin_cf;
-```
-
-Arguments:
-* `packageId` - The ID of the Plug-In (string)
-
----
-
-### Create A Custom Field
-**POST ``/api/v2/admins/{adminID}/custom-field-definitions``**
-
-```javascript
-body = {
-  "Name" : "string",
-  "IsMandatory" : true,
-  "SortOrder" : 0,
-  "DataInputType" : "string",
-  "DataRegex" : "string",
-  "MinValue" : 0,
-  "MaxValue" : 0,
-  "ReferenceTable" : "string",
-  "DataFieldType" : "string",
-  "IsSearchable" : true,
-  "IsSensitive" : true,
-  "Active" : true,
-  "Options" : {
-    {
-      "Name" : "string"
-    }
-  }
-};
-
-new_cf = await  client. createCustomField(body);
-echo new_cf;
-```
-
-Field Definitions for `body`: All the field definitions for this request can be found {here}(https://github.com/Arcadier/Coding-Tutorials/tree/master/Creating%20Custom%20Fields).
-
----
-
-### Edit A Custom Field
-**PUT ``/api/v2/admins/{adminID}/custom-field-definitions/{customfield-code}``**
-
-```javascript
-body = {
-  "Name" : "string",
-  "IsMandatory" : true,
-  "SortOrder" : 0,
-  "DataInputType" : "string",
-  "DataRegex" : "string",
-  "MinValue" : 0,
-  "MaxValue" : 0,
-  "ReferenceTable" : "string",
-  "DataFieldType" : "string",
-  "IsSearchable" : true,
-  "IsSensitive" : true,
-  "Active" : true,
-  "Options" : {
-    {
-      "Name" : "string"
-    }
-  }
-};
-
-updated_cf = await  client. updateCustomField(code, body)
-echo updated_cf;
-```
-
-Arguments:
-* `code` - The custom field code obtained after creating it/getting its definition
-
-Field Definitions for `body`: All the field definitions for this request can be found {here}(https://github.com/Arcadier/Coding-Tutorials/tree/master/Creating%20Custom%20Fields).
-
----
-
-### Delete A Custom Field
-**DELETE ``/api/v2/admins/{adminID}/custom-field-definitions/{custom-field-code}``**
-
-```javascript
-deleted_cf = await  client. deleteCustomField(code);
-echo deleted_cf;
-```
-
-Arguments:
-* `code` - The custom field code obtained after creating it/getting its definition
-
----
-
-## Checkout
-### Generate Invoice and Order Details from cart
-**POST ``/api/v2/users/{buyerID}/invoices/carts``**
-
-```javascript
-body = {
-    "Cart Item ID #1", //the cart item ID
-    "Cart Item ID #2",
-    "Cart Item ID #3"
-};
-
-generate_details = await  client. generateInvoice(buyerId, body);
-echo generate_details;
-```
-
-Arguments:
-* `buyerID` - The BUyer"s GUID (string)
-* `body`
-
-Field Definitions in `body`: the difference between an "item ID" and a "cart item ID" is explained {here}(https://apiv2.arcadier.com/#4b0bc4da-201c-472e-8deb-1a2e1099f908)
 
 ---
