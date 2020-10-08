@@ -5,11 +5,9 @@ permalink: /node-sdk/
 ---
 
 # Initialising
-Download the required libraries to your directory using the following npm command line:
-```bash
-npm i arcadier-node
-```
-Create a directory for your web app"s scripts. In this directory, create a `config.js` files containing your marketplace"s credentials:
+To download the required libraries to your `node-modules` directory, contact us to receive the command line to execute in Node.
+
+Create a directory for your web app's scripts. In this directory, create a `config.js` files containing your marketplace's credentials:
 ```javascript
 module.exports = {
     client:{
@@ -24,7 +22,7 @@ module.exports = {
 Remember to load the SDK and the `config.js` in all your scripts. For example, if you create a directory for all your scripts, then import them using the following lines at the top of your files:
 
 ```javascript
-const ArcadierClient = require("../sdk"); //loads the SDK resources
+const ArcadierClient = require("path-to-sdk/sdk"); //loads the SDK resources
 const config = require("./config.js"); //loads the config to autenticate usage of Arcadier"s APIs
 
 ```
@@ -47,9 +45,6 @@ Arguments:
 ### Create User Address
 **POST ``/api/v2/users/{userID}/addresses``** is mapped to `Addresses.createAddress(userId, body)`
 
-Arguments:
-* `userId` - *(Required)* User GUID (string)
-* `body` - *(Required)*
 
 ```javascript
 var body = {
@@ -67,101 +62,82 @@ var body = {
     "Country": "string", //required
     "CountryCode": "string" //required
 };
-var newAddress = await  client. client.Addresses.createAddress(userId, body);
+
+var newAddress = await  client.Addresses.createAddress(userId, body);
 console.log(newAddress);
 ```
 
----
-
-### Update User Address
-**PUT ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `updateUserAddress(id, addressID, body)`
-
 Arguments:
-* `id` - *(Required)* User GUID (string)
-* `addressID` - *(Required)* Address GUID (string)
+* `userId` - *(Required)* User GUID (string)
 * `body` - *(Required)*
 
-```javascript
-body = {
-    "Name" : "string",
-    "Line1" : "string",
-    "Line2" : "string",
-    "PostCode" : "string",
-    "Latitude" : "string",
-    "Longitude" : "string",
-    "Delivery" : true,
-    "Pickup" : true,
-    "SpecialInstructions" : "string",
-    "State" : "string",
-    "City" : "string",
-    "Country" : "string", //required
-    "CountryCode" : "string" //required
-};
-```
-
 ---
 
+
 ### Delete User Address
-**DELETE ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `deleteUserAddress(id, addressID)`
+**DELETE ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `Addresses.deleteAddress(userId, addressId)`
+
+```javascript
+var deletedAddress = await client.Addresses.deleteAddress(userId, addressId);
+console.log(deletedAddress);
+```
 
 Arguments:
-* `id` - *(Required)* User GUID (string)
-* `addressID` - *(Optional)* Address GUID (string). Ommitting it will return all addresses of that user.
+* `userId` - *(Required)* User GUID (string)
+* `addressId` - *(Optional)* Address GUID (string). Ommitting it will return all addresses of that user.
 
 ---
 
 ## Items
 ### Get Item Information
-**GET ``/api/v2/items/{itemID}``** is mapped to `getItemInfo(id)`
+**GET ``/api/v2/items/{itemID}``** is mapped to `Items.getItemDetails(itemId)`
+
+```javascript
+var itemDetails = await client.Items.getItemDetails(itemId);
+console.log(itemDetails);
+```
 
 Arguments:
-* `id` - *(Required)* Item GUID (string)
+* `itemId` - *(Required)* Item GUID (string)
 
 ---
 
 ### Get All Items
-**GET** **```/api/v2/items```** is mapped to `getAllItems(pageSize = null, pageNumber = null);`
+**GET** **```/api/v2/items```** is mapped to `Items.getAllItems(pageSize, pageNumber)`
+
+```javascript
+var item_list = await  client.Items.getAllItems(pageSize, pageNumber);
+console.log(item_list);
+```
 
 Arguments:
 * `pageSize` - *(Optional)* The number of results in one response. (integer)
 * `pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
 
-```javascript
-item_list = await  client. getAllItems();
-echo item_list{"Records"}; //The actual array of items is in the "Records" field of the JSON response
-```
 
 ---
 
 ### Search for an item
 
-**POST** **```/api/v2/items```** is mapped to `searchItems(body);`
+**POST** **```/api/v2/items```** is mapped to `Items.searchItems(body)`
 
 Search filters are passed to the function as an object:
 ```javascript
-body = {
+var body = {
     "keywords" : "string", //keyword in item name, description, or custom field
     "pagesize" : "string", //number of results
-    "Categories" :{
-        "string" //Category GUID
-    },
     "sellerID" : "string", //merchant GUID
     "customFields" : "string", 
-	"tax" : "string",
-	"minPrice" : 0,
-	"maxPrice" : 0,
-	"minRating" : 0,
-	"maxRating" : 0,
-	"startDate" : "unix_time",
-	"endDate" : "unix_time",
-	"createdStartDate" : "unix_time",
-	"createdEndDate" : "unix_time",
-	"updatedStartDate" : "unix_time",
-	"updatedEndDate" : "unix_time"
+    "minPrice" : 0,
+    "maxPrice" : 0,
+    "createdStartDate" : "unix_time",
+    "createdEndDate" : "unix_time",
+    "updatedStartDate" : "unix_time",
+    "updatedEndDate" : "unix_time"
 };
 
-response = await  client. getAllItemsJsonFiltering(body);
-results = response{"Records"}; //The actual array of matching items is in the "Records" field of the JSON response
+var response = await  client.Items.searchItems(body);
+console.log(response) //The actual array of matching items is in the "Records" field of the JSON response
 ```
 
 ---
@@ -174,7 +150,7 @@ Arguments:
 * `body` - Item details (Object)
 
 ```javascript
-body = {
+var body = {
     "SKU" : "string",
     "Name" : "string", //required
     "BuyerDescription" : "string", //required
