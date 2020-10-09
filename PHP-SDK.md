@@ -680,6 +680,9 @@ $data = [
     'string',
     'string'
 ];
+
+$tag_new_item = $sdk->tagItem($data, $merchantId, $itemId);
+echo $tag_new_item;
 ```
 
 ---
@@ -689,6 +692,11 @@ $data = [
 Arguments:
 * `$pageSize` - *(Optional)* The number of results in one response. (integer)
 * `$pageNumber` - *(Optional)* Depending on `pageSize` and the total number of results, specifying this will display different sets of results. (integer)
+
+```php
+$get_tags = $sdk->getItemTags();
+echo $get_tags;
+```
 
 More about pagination [here](https://apiv2.arcadier.com/#pagination)
 
@@ -701,6 +709,9 @@ $data = [
     'string_1',
     'string_2'
 ];
+
+$deleted_tags = $sdk->deleteTags($data);
+echo $deleted_tags;
 ```
 
 ---
