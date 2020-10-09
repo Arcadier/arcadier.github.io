@@ -33,7 +33,7 @@ const config = require("./config.js"); //loads the config to autenticate usage o
 **GET ``/api/v2/users/{userID}/addresses/{addressID}``** is mapped to `Addresses.getUserAddresses(userId)`
 
 ```javascript
-var addresses = await client. client.Addresses.getUserAddresses(userId);
+var addresses = await client.Addresses.getUserAddresses(userId);
 console.log(addresses);
 ```
 
