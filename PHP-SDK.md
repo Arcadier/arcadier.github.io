@@ -5,10 +5,8 @@ permalink: /php-sdk/
 ---
 
 # Initialising
-Download the required libraries to your directory using the following Composer command line:
-```bash
+The required libraries can be downloaded to your directory using composer. Contact us to receive the composer command to download the SDK resource files.
 
-```
 
 Find the `.env` file in the following directory created: "vendor\arcadier\arcadier-php\src" and replace the variables with the relevant values:
 ```
